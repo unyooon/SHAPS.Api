@@ -1,6 +1,9 @@
 package main
 
+import "shaps.api/infrastructure"
+
 func main() {
-	r := NewRouting()
+	d := infrastructure.NewDb()
+	r := NewRouting(d)
 	r.Run()
 }

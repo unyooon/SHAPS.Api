@@ -4,17 +4,20 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
+	"shaps.api/infrastructure"
 )
 
 type Routing struct {
-	gin  *gin.Engine
-	port string
+	Db   *infrastructure.Db
+	Gin  *gin.Engine
+	Port string
 }
 
-func NewRouting() *Routing {
+func NewRouting(d *infrastructure.Db) *Routing {
 	r := &Routing{
-		gin:  gin.Default(),
-		port: os.Getenv("PORT"),
+		Db:   d,
+		Gin:  gin.Default(),
+		Port: os.Getenv("PORT"),
 	}
 
 	r.setRouting()
@@ -27,5 +30,5 @@ func (r *Routing) setRouting() {
 }
 
 func (r *Routing) Run() {
-	r.gin.Run(r.port)
+	r.Gin.Run(r.Port)
 }
