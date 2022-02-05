@@ -1,25 +1,25 @@
 package main
 
 import (
-	"os"
-
 	"github.com/gin-gonic/gin"
 	"shaps.api/controller"
+	"shaps.api/domain/setting"
 )
 
 type Routing struct {
-	Gin  *gin.Engine
-	Port string
-	sc   *controller.SubscriptionController
+	Gin     *gin.Engine
+	Setting setting.Setting
+	sc      *controller.SubscriptionController
 }
 
 func NewRouting(
 	sc *controller.SubscriptionController,
+	setting setting.Setting,
 ) *Routing {
 	r := &Routing{
-		Gin:  gin.Default(),
-		Port: os.Getenv("PORT"),
-		sc:   sc,
+		Gin:     gin.Default(),
+		Setting: setting,
+		sc:      sc,
 	}
 
 	r.setRouting()
@@ -32,5 +32,5 @@ func (r *Routing) setRouting() {
 }
 
 func (r *Routing) Run() {
-	r.Gin.Run(r.Port)
+	r.Gin.Run(r.Setting.Port)
 }

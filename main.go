@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	"shaps.api/domain/setting"
 )
 
 func main() {
@@ -15,6 +16,9 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	r := InitializeHandler(os.Getenv("DSN"))
+	r := InitializeHandler(setting.Setting{
+		Port: os.Getenv("PORT"),
+		Dsn:  os.Getenv("DSN"),
+	})
 	r.Run()
 }

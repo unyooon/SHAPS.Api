@@ -9,17 +9,18 @@ package main
 import (
 	"shaps.api/controller"
 	"shaps.api/domain"
+	"shaps.api/domain/setting"
 	"shaps.api/infrastructure"
 	"shaps.api/repository"
 )
 
 // Injectors from wire.go:
 
-func InitializeHandler(dsn string) *Routing {
-	db := infrastructure.NewDb(dsn)
+func InitializeHandler(s setting.Setting) *Routing {
+	db := infrastructure.NewDb(s)
 	subscriptionRepository := repository.NewSubscriptionRepository(db)
 	createSubscriptionInteractor := domain.NewCreateSubscriptionInteractor(subscriptionRepository)
 	subscriptionController := controller.NewSubscriptionController(createSubscriptionInteractor)
-	routing := NewRouting(subscriptionController)
+	routing := NewRouting(subscriptionController, s)
 	return routing
 }

@@ -3,9 +3,12 @@
 
 package main
 
-import "github.com/google/wire"
+import (
+	"github.com/google/wire"
+	"shaps.api/domain/setting"
+)
 
-func InitializeHandler(dsn string) *Routing {
+func InitializeHandler(s setting.Setting) *Routing {
 	wire.Build(SuperSet, NewRouting)
 	return nil
 }

@@ -3,6 +3,7 @@ package infrastructure
 import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mssql"
+	"shaps.api/domain/setting"
 	"shaps.api/entity"
 )
 
@@ -10,8 +11,8 @@ type Db struct {
 	Connection *gorm.DB
 }
 
-func NewDb(dsn string) *Db {
-	db, err := gorm.Open("mssql", dsn)
+func NewDb(setting setting.Setting) *Db {
+	db, err := gorm.Open("mssql", setting.Dsn)
 	if err != nil {
 		panic(err.Error())
 	}
