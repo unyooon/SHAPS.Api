@@ -1,9 +1,8 @@
 package main
 
-import "shaps.api/infrastructure"
+import "os"
 
 func main() {
-	d := infrastructure.NewDb()
-	r := NewRouting(d)
+	r := InitializeHandler(os.Getenv("DSN"))
 	r.Run()
 }
