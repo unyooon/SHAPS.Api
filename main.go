@@ -6,7 +6,6 @@ import (
 
 	"github.com/joho/godotenv"
 	"shaps.api/domain/setting"
-	"shaps.api/middleware"
 )
 
 func main() {
