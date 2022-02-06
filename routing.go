@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"shaps.api/controller"
 	"shaps.api/domain/setting"
+	"shaps.api/middleware"
 )
 
 type Routing struct {
@@ -22,6 +23,7 @@ func NewRouting(
 		sc:      sc,
 	}
 
+	r.Gin.Use(middleware.ValidateToken(r.Setting))
 	r.setRouting()
 
 	return r
