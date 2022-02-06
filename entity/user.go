@@ -3,7 +3,6 @@ package entity
 import "time"
 
 type User struct {
-	// TODO: IDが上書きできず2重宣言になってしまうの修正
 	ID          string      `column:"id" gorm:"primary_key"`
 	DisplayName string      `column:"display_name"`
 	Icon        string      `column:"icon"`

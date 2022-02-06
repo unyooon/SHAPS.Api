@@ -22,7 +22,6 @@ func main() {
 		B2CTenantId: os.Getenv("B2C_TENANT_ID"),
 		B2CClientId: os.Getenv("B2C_CLIENT_ID"),
 	}
-	middleware.ValidateToken(s)
 	r := InitializeHandler(s)
 	r.Run()
 }
