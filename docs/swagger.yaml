@@ -1,0 +1,43 @@
+basePath: /
+definitions:
+  dto.CreateSubscriptionRequest:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      price:
+        type: integer
+      term:
+        type: integer
+    type: object
+host: localhost:3000
+info:
+  contact: {}
+  description: SHAPS API
+  license:
+    name: yuta
+  title: SHAPS API
+  version: version(1.0)
+paths:
+  /subscriptions:
+    post:
+      consumes:
+      - application/json
+      description: create subscription
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateSubscriptionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Create Subscription
+      tags:
+      - subscription
+swagger: "2.0"

@@ -1,0 +1,66 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "SHAPS API",
+        "title": "SHAPS API",
+        "contact": {},
+        "license": {
+            "name": "yuta"
+        },
+        "version": "version(1.0)"
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "paths": {
+        "/subscriptions": {
+            "post": {
+                "description": "create subscription",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subscription"
+                ],
+                "summary": "Create Subscription",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateSubscriptionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dto.CreateSubscriptionRequest": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "integer"
+                },
+                "term": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
