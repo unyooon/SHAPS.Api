@@ -13,16 +13,19 @@ type Routing struct {
 	Gin     *gin.Engine
 	Setting setting.Setting
 	sc      *controller.SubscriptionController
+	mc      *controller.MeController
 }
 
 func NewRouting(
 	sc *controller.SubscriptionController,
+	mc *controller.MeController,
 	setting setting.Setting,
 ) *Routing {
 	r := &Routing{
 		Gin:     gin.Default(),
 		Setting: setting,
 		sc:      sc,
+		mc:      mc,
 	}
 
 	r.setRouting()
@@ -35,6 +38,7 @@ func (r *Routing) setRouting() {
 	v1 := r.Gin.Group("/api/v1", middleware.ValidateToken(r.Setting))
 	{
 		v1.POST("/subscriptions", func(c *gin.Context) { r.sc.Post(c) })
+		v1.POST("/me", func(c *gin.Context) { r.mc.Post(c) })
 	}
 }
 

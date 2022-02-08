@@ -14,6 +14,10 @@ import (
 	"shaps.api/repository"
 )
 
+import (
+	_ "shaps.api/docs"
+)
+
 // Injectors from wire.go:
 
 func InitializeHandler(s setting.Setting) *Routing {
@@ -21,6 +25,9 @@ func InitializeHandler(s setting.Setting) *Routing {
 	subscriptionRepository := repository.NewSubscriptionRepository(db)
 	createSubscriptionInteractor := domain.NewCreateSubscriptionInteractor(subscriptionRepository)
 	subscriptionController := controller.NewSubscriptionController(createSubscriptionInteractor)
-	routing := NewRouting(subscriptionController, s)
+	userRepository := repository.NewUserRepository(db)
+	createUserInteractor := domain.NewCreateUserInteractor(userRepository)
+	meController := controller.NewMeController(createUserInteractor)
+	routing := NewRouting(subscriptionController, meController, s)
 	return routing
 }
