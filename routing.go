@@ -2,6 +2,8 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
 	"shaps.api/controller"
 	"shaps.api/domain/setting"
 	"shaps.api/middleware"
@@ -23,14 +25,17 @@ func NewRouting(
 		sc:      sc,
 	}
 
-	r.Gin.Use(middleware.ValidateToken(r.Setting))
 	r.setRouting()
 
 	return r
 }
 
 func (r *Routing) setRouting() {
-	r.Gin.POST("/subscriptions", func(c *gin.Context) { r.sc.Post(c) })
+	r.Gin.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	v1 := r.Gin.Group("/api/v1", middleware.ValidateToken(r.Setting))
+	{
+		v1.POST("/subscriptions", func(c *gin.Context) { r.sc.Post(c) })
+	}
 }
 
 func (r *Routing) Run() {

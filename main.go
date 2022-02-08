@@ -5,9 +5,17 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	_ "shaps.api/docs"
 	"shaps.api/domain/setting"
 )
 
+// @title SHAPS API
+// @version version(1.0)
+// @description SHAPS API
+// @license.name yuta
+
+// @host localhost:3000
+// @BasePath /
 func main() {
 	// 環境変数読み込み
 	err := godotenv.Load()

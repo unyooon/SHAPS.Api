@@ -17,14 +17,15 @@ import (
 func ValidateToken(s setting.Setting) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// jwt取得
-		j := strings.Fields(c.GetHeader("Authorization"))[1]
-		if len(j) == 0 {
+		bearer := c.GetHeader("Authorization")
+		if len(bearer) == 0 {
 			log.Print("Error: not found authorization header")
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"message": errors.New("invalid token").Error(),
 			})
 			return
 		}
+		j := strings.Fields(bearer)[1]
 
 		// jwk取得
 		set, err := jwk.Fetch(context.Background(), s.B2CJwkUri)
