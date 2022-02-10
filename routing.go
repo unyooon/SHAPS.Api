@@ -22,12 +22,14 @@ func NewRouting(
 	setting setting.Setting,
 ) *Routing {
 	r := &Routing{
-		Gin:     gin.Default(),
+		Gin:     gin.New(),
 		Setting: setting,
 		sc:      sc,
 		mc:      mc,
 	}
 
+	r.Gin.Use(gin.Recovery())
+	r.Gin.Use(middleware.Logging)
 	r.setRouting()
 
 	return r
