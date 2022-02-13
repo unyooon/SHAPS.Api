@@ -3,7 +3,6 @@ package middleware
 import (
 	"context"
 	"errors"
-	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -19,7 +18,6 @@ func ValidateToken(s setting.Setting) gin.HandlerFunc {
 		// jwt取得
 		bearer := c.GetHeader("Authorization")
 		if len(bearer) == 0 {
-			log.Print("Error: not found authorization header")
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"message": errors.New("invalid token").Error(),
 			})
@@ -30,7 +28,6 @@ func ValidateToken(s setting.Setting) gin.HandlerFunc {
 		// jwk取得
 		set, err := jwk.Fetch(context.Background(), s.B2CJwkUri)
 		if err != nil {
-			log.Printf("Error: failed to parse JWK: %s", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 				"message": err,
 			})
@@ -44,7 +41,6 @@ func ValidateToken(s setting.Setting) gin.HandlerFunc {
 			jwt.InferAlgorithmFromKey(true),
 		)
 		if err != nil {
-			log.Printf("Error: failed to parse payload: %s", err)
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"message": errors.New("invalid token").Error(),
 			})
@@ -53,7 +49,6 @@ func ValidateToken(s setting.Setting) gin.HandlerFunc {
 
 		// 期限チェック
 		if token.Expiration().Unix() < time.Now().Unix() {
-			log.Print("Error: expired token")
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"message": errors.New("invalid token").Error(),
 			})
@@ -61,7 +56,6 @@ func ValidateToken(s setting.Setting) gin.HandlerFunc {
 		}
 		// 発行者チェック
 		if strings.Split(token.Issuer(), "/")[3] != s.B2CTenantId {
-			log.Print("Error: invalid grant")
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"message": errors.New("invalid token").Error(),
 			})
@@ -70,7 +64,6 @@ func ValidateToken(s setting.Setting) gin.HandlerFunc {
 
 		// 対象者チェック
 		if token.Audience()[0] != s.B2CClientId {
-			log.Print("Error: invalid grant")
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"message": errors.New("invalid token").Error(),
 			})

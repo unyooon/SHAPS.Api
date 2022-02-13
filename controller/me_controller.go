@@ -15,7 +15,15 @@ func NewMeController(uc usecase.UserCreater) *MeController {
 	}
 }
 
+// CreateUser godoc
+// @Summary      Create User
+// @Description  create user
+// @Tags         user
+// @Accept       json
+// @Produce      json
+// @Success      200
+// @Router       /me [post]
 func (mc *MeController) Post(c *gin.Context) {
-	mc.create.Excecute(c)
-	c.JSON(200, nil)
+	err := mc.create.Excecute(c)
+	Handler(c, nil, err)
 }

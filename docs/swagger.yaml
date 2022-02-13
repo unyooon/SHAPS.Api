@@ -20,6 +20,19 @@ info:
   title: SHAPS API
   version: version(1.0)
 paths:
+  /me:
+    post:
+      consumes:
+      - application/json
+      description: create user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Create User
+      tags:
+      - user
   /subscriptions:
     post:
       consumes:

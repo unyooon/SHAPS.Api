@@ -1,9 +1,8 @@
 package domain
 
 import (
-	"errors"
-
 	"github.com/gin-gonic/gin"
+	"shaps.api/domain/exception"
 	"shaps.api/entity"
 	"shaps.api/repository"
 )
@@ -18,17 +17,20 @@ func NewCreateUserInteractor(r repository.UserRepositoryInterface) *CreateUserIn
 	}
 }
 
-func (i *CreateUserInteractor) Excecute(c *gin.Context) (err error) {
+func (i *CreateUserInteractor) Excecute(c *gin.Context) exception.Wrapper {
 	uid, exists := c.Get("userId")
 	if !exists {
-		return errors.New("not found userId")
+		return exception.Wrapper{
+			Code:    exception.NotFoundCode,
+			Message: exception.NotFoundUserId,
+		}
 	}
 
 	u := entity.User{
 		ID: uid.(string),
 	}
 
-	_, err = i.UserRepository.Create(u)
+	_, err := i.UserRepository.Create(u)
 
 	return err
 }
