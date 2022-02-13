@@ -1,6 +1,6 @@
 package exception
 
-type Code uint
+type Code int
 
 const (
 	OkCode Code = 200
