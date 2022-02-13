@@ -24,6 +24,7 @@ func Logging(c *gin.Context) {
 	logger.Info(
 		"request",
 		zap.String("traceId", traceId.String()),
+		zap.String("method", c.Request.Method),
 		zap.String("path", c.Request.URL.Path),
 		zap.String("query", c.Request.URL.RawQuery),
 		zap.String("ip", c.ClientIP()),
