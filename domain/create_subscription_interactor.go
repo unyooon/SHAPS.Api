@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"shaps.api/domain/dto"
+	"shaps.api/domain/exception"
 	"shaps.api/entity"
 	"shaps.api/repository"
 )
@@ -19,7 +20,7 @@ func NewCreateSubscriptionInteractor(r repository.SubscriptionRepositoryInterfac
 	}
 }
 
-func (i *CreateSubscriptionInteractor) Excecute(c *gin.Context) (err error) {
+func (i *CreateSubscriptionInteractor) Excecute(c *gin.Context) exception.Wrapper {
 	body := make([]byte, c.Request.ContentLength)
 	c.Request.Body.Read(body)
 
@@ -33,7 +34,7 @@ func (i *CreateSubscriptionInteractor) Excecute(c *gin.Context) (err error) {
 		Description: req.Description,
 	}
 
-	_, err = i.SubscriptionRepository.Create(s)
+	_, err := i.SubscriptionRepository.Create(s)
 
 	return err
 }

@@ -24,6 +24,6 @@ func NewMeController(uc usecase.UserCreater) *MeController {
 // @Success      200
 // @Router       /me [post]
 func (mc *MeController) Post(c *gin.Context) {
-	mc.create.Excecute(c)
-	c.JSON(200, nil)
+	err := mc.create.Excecute(c)
+	Handler(c, nil, err)
 }
