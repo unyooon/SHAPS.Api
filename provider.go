@@ -4,8 +4,8 @@ import (
 	"github.com/google/wire"
 	"shaps.api/controller"
 	"shaps.api/domain"
-	"shaps.api/infrastructure"
-	"shaps.api/repository"
+	"shaps.api/infrastructure/db"
+	"shaps.api/infrastructure/repository"
 	"shaps.api/usecase"
 )
 
@@ -27,6 +27,6 @@ var SuperSet = wire.NewSet(
 	wire.Bind(new(repository.UserRepositoryInterface), new(*repository.UserRepository)),
 
 	// db
-	infrastructure.NewDb,
-	wire.Bind(new(infrastructure.DbInterface), new((*infrastructure.Db))),
+	db.NewDb,
+	wire.Bind(new(db.DbInterface), new((*db.Db))),
 )

@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"shaps.api/domain/exception"
 	"shaps.api/entity"
-	"shaps.api/repository"
+	"shaps.api/infrastructure/repository"
 )
 
 type CreateUserInteractor struct {

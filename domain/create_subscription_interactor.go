@@ -7,7 +7,7 @@ import (
 	"shaps.api/domain/dto"
 	"shaps.api/domain/exception"
 	"shaps.api/entity"
-	"shaps.api/repository"
+	"shaps.api/infrastructure/repository"
 )
 
 type CreateSubscriptionInteractor struct {
