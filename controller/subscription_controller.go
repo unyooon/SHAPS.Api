@@ -25,6 +25,6 @@ func NewSubscriptionController(uc usecase.SubscriptionCreater) *SubscriptionCont
 // @Success      200
 // @Router       /subscriptions [post]
 func (sc *SubscriptionController) Post(c *gin.Context) {
-	sc.create.Excecute(c)
-	c.JSON(200, nil)
+	err := sc.create.Excecute(c)
+	Handler(c, nil, err)
 }
