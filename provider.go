@@ -5,6 +5,7 @@ import (
 	"shaps.api/controller"
 	"shaps.api/domain"
 	"shaps.api/infrastructure/db"
+	"shaps.api/infrastructure/external"
 	"shaps.api/infrastructure/repository"
 	"shaps.api/usecase"
 )
@@ -25,6 +26,9 @@ var SuperSet = wire.NewSet(
 	repository.NewUserRepository,
 	wire.Bind(new(repository.SubscriptionRepositoryInterface), new(*repository.SubscriptionRepository)),
 	wire.Bind(new(repository.UserRepositoryInterface), new(*repository.UserRepository)),
+
+	//client
+	external.NewStripeClient,
 
 	// db
 	db.NewDb,

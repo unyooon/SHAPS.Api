@@ -11,6 +11,7 @@ import (
 	"shaps.api/domain"
 	"shaps.api/domain/setting"
 	"shaps.api/infrastructure/db"
+	"shaps.api/infrastructure/external"
 	"shaps.api/infrastructure/repository"
 )
 
@@ -26,7 +27,8 @@ func InitializeHandler(s setting.Setting) *Routing {
 	createSubscriptionInteractor := domain.NewCreateSubscriptionInteractor(subscriptionRepository)
 	subscriptionController := controller.NewSubscriptionController(createSubscriptionInteractor)
 	userRepository := repository.NewUserRepository(dbDb)
-	createUserInteractor := domain.NewCreateUserInteractor(userRepository)
+	stripeClient := external.NewStripeClient(s)
+	createUserInteractor := domain.NewCreateUserInteractor(userRepository, stripeClient)
 	meController := controller.NewMeController(createUserInteractor)
 	routing := NewRouting(subscriptionController, meController, s)
 	return routing

@@ -5,18 +5,19 @@ import (
 	"github.com/stripe/stripe-go/v72"
 	"shaps.api/domain/exception"
 	"shaps.api/entity"
-	"shaps.api/infrastructure/external/stripeclient"
+	"shaps.api/infrastructure/external"
 	"shaps.api/infrastructure/repository"
 )
 
 type CreateUserInteractor struct {
 	UserRepository repository.UserRepositoryInterface
-	StripeClient   stripeclient.Client
+	StripeClient   *external.StripeClient
 }
 
 func NewCreateUserInteractor(
 	r repository.UserRepositoryInterface,
-	sc stripeclient.Client) *CreateUserInteractor {
+	sc *external.StripeClient,
+) *CreateUserInteractor {
 	return &CreateUserInteractor{
 		UserRepository: r,
 		StripeClient:   sc,
