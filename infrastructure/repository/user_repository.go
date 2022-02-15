@@ -6,14 +6,14 @@ import (
 	"github.com/jinzhu/gorm"
 	"shaps.api/domain/exception"
 	"shaps.api/entity"
-	"shaps.api/infrastructure"
+	"shaps.api/infrastructure/db"
 )
 
 type UserRepository struct {
 	db *gorm.DB
 }
 
-func NewUserRepository(db infrastructure.DbInterface) *UserRepository {
+func NewUserRepository(db db.DbInterface) *UserRepository {
 	d := db.Connect()
 	return &UserRepository{
 		db: d,

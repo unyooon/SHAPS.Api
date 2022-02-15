@@ -4,6 +4,7 @@ import "time"
 
 type User struct {
 	ID        string         `column:"id" gorm:"primary_key"`
+	StripeId  string         `column:"stripeId"`
 	Icon      *string        `column:"icon"`
 	Host      []Subscription `column:"host" gorm:"many2many:hosts"`
 	Construct []Subscription `column:"contract" gorm:"many2many:constructs"`

@@ -4,14 +4,14 @@ import (
 	"github.com/jinzhu/gorm"
 	"shaps.api/domain/exception"
 	"shaps.api/entity"
-	"shaps.api/infrastructure"
+	"shaps.api/infrastructure/db"
 )
 
 type SubscriptionRepository struct {
 	db *gorm.DB
 }
 
-func NewSubscriptionRepository(db infrastructure.DbInterface) *SubscriptionRepository {
+func NewSubscriptionRepository(db db.DbInterface) *SubscriptionRepository {
 	d := db.Connect()
 	return &SubscriptionRepository{
 		db: d,
