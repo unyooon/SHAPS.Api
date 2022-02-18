@@ -11,4 +11,10 @@ ENV DEV=production
 
 RUN go mod download
 
-COPY *.go ./
+COPY . ./
+
+RUN go build -o /docker-gs-ping main.go wire_gen.go routing.go
+
+EXPOSE 8080
+
+CMD ["/docker-gs-ping"]
