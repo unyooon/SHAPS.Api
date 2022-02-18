@@ -23,11 +23,12 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 	s := setting.Setting{
-		Dsn:         os.Getenv("DSN"),
-		Port:        os.Getenv("PORT"),
-		B2CJwkUri:   os.Getenv("B2C_JWK_ENDPOINT"),
-		B2CTenantId: os.Getenv("B2C_TENANT_ID"),
-		B2CClientId: os.Getenv("B2C_CLIENT_ID"),
+		Dsn:          os.Getenv("DSN"),
+		Port:         os.Getenv("PORT"),
+		B2CJwkUri:    os.Getenv("B2C_JWK_ENDPOINT"),
+		B2CTenantId:  os.Getenv("B2C_TENANT_ID"),
+		B2CClientId:  os.Getenv("B2C_CLIENT_ID"),
+		StripeApiKey: os.Getenv("STRIPE_API_KEY"),
 	}
 	r := InitializeHandler(s)
 	r.Run()
