@@ -1,0 +1,30 @@
+name: $(Date:yyyyMMdd)-$(Build.BuildId)-$(Build.SourceBranchName)
+
+trigger:
+  branches:
+    include:
+    - develop
+  paths:
+    include:
+    - "*"
+
+pr: none
+
+variables:
+- group: DEV_API_ENV
+- name: vmImageName
+  value: ubuntu-18.04
+
+- stage: Build
+  displayName: Build and push stage
+  jobs:  
+  - job: Build
+    displayName: Build job
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - script: |
+        sudo docker build --no-cache -t $(DEV_REGISTRY_SERVER)/$(DEV_IMAGE_NAME):$(Build.BuildNumber) .
+        echo $(DEV_REGISTRY_PASSWORD) | sudo docker login -u $(DEV_REGISTRY_USER_NAME) --password-stdin $(DEV_REGISTRY_SERVER)
+        sudo docker push $(DEV_REGISTRY_SERVER)/$(DEV_IMAGE_NAME):$(Build.BuildNumber)
+      displayName: "Build and Push Image"
