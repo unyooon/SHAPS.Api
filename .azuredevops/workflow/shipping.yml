@@ -15,7 +15,7 @@ variables:
 - name: vmImageName
   value: ubuntu-18.04
 
-stage:
+stages:
 - stage: Build
   displayName: Build and push stage
   jobs:  
