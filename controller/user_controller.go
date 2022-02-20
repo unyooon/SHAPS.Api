@@ -5,16 +5,16 @@ import (
 	"shaps.api/usecase"
 )
 
-type MeController struct {
+type UserController struct {
 	create usecase.UserCreater
 	read   usecase.UserReader
 }
 
-func NewMeController(
+func NewUserController(
 	uc usecase.UserCreater,
 	ur usecase.UserReader,
-) *MeController {
-	return &MeController{
+) *UserController {
+	return &UserController{
 		create: uc,
 		read:   ur,
 	}
@@ -28,7 +28,7 @@ func NewMeController(
 // @Produce      json
 // @Success      200
 // @Router       /me [post]
-func (mc *MeController) Create(c *gin.Context) {
+func (mc *UserController) Create(c *gin.Context) {
 	err := mc.create.Excecute(c)
 	Handler(c, nil, err)
 }
@@ -41,7 +41,7 @@ func (mc *MeController) Create(c *gin.Context) {
 // @Produce      json
 // @Success      200
 // @Router       /me [get]
-func (mc *MeController) Read(c *gin.Context) {
+func (mc *UserController) Read(c *gin.Context) {
 	u, err := mc.read.Excecute(c)
 	Handler(c, u, err)
 }

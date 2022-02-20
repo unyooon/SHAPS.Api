@@ -13,7 +13,7 @@ import (
 var SuperSet = wire.NewSet(
 	// controller
 	controller.NewSubscriptionController,
-	controller.NewMeController,
+	controller.NewUserController,
 
 	// usecase
 	domain.NewCreateSubscriptionInteractor,
