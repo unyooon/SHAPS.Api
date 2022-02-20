@@ -24,7 +24,7 @@ func NewSubscriptionController(uc usecase.SubscriptionCreater) *SubscriptionCont
 // @Param        body body dto.CreateSubscriptionRequest true "body"
 // @Success      200
 // @Router       /subscriptions [post]
-func (sc *SubscriptionController) Post(c *gin.Context) {
+func (sc *SubscriptionController) Create(c *gin.Context) {
 	err := sc.create.Excecute(c)
 	Handler(c, nil, err)
 }

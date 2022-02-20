@@ -30,5 +30,5 @@ func (repo *SubscriptionRepository) Create(req entity.Subscription) (entity.Subs
 		return req, w
 	}
 
-	return req, exception.Wrapper{}
+	return req, exception.Wrapper{Code: exception.OkCode}
 }

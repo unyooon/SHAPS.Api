@@ -43,3 +43,19 @@ func (repo *UserRepository) Create(req entity.User) (entity.User, exception.Wrap
 
 	return req, exception.Wrapper{}
 }
+
+func (repo *UserRepository) Read(id string) (entity.User, exception.Wrapper) {
+	var u entity.User
+	result := repo.db.First(&u, "id = ?", id)
+	if result.Error != nil {
+		e := exception.Wrapper{
+			Code:    exception.InternalServerErrorCode,
+			Message: exception.DatabaseError,
+			Err:     result.Error,
+		}
+		e.Error()
+		return u, e
+	}
+
+	return u, exception.Wrapper{Code: exception.OkCode}
+}

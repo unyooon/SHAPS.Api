@@ -39,8 +39,9 @@ func (r *Routing) setRouting() {
 	r.Gin.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	v1 := r.Gin.Group("/api/v1", middleware.ValidateToken(r.Setting))
 	{
-		v1.POST("/subscriptions", func(c *gin.Context) { r.sc.Post(c) })
-		v1.POST("/me", func(c *gin.Context) { r.mc.Post(c) })
+		v1.POST("/subscriptions", func(c *gin.Context) { r.sc.Create(c) })
+		v1.POST("/me", func(c *gin.Context) { r.mc.Create(c) })
+		v1.GET("/me", func(c *gin.Context) { r.mc.Read(c) })
 	}
 }
 

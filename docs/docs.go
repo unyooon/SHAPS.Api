@@ -27,6 +27,24 @@ var doc = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/me": {
+            "get": {
+                "description": "read user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Read User",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            },
             "post": {
                 "description": "create user",
                 "consumes": [

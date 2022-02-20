@@ -21,6 +21,18 @@ info:
   version: version(1.0)
 paths:
   /me:
+    get:
+      consumes:
+      - application/json
+      description: read user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Read User
+      tags:
+      - user
     post:
       consumes:
       - application/json

@@ -1,6 +1,8 @@
 package domain
 
 import (
+	"errors"
+
 	"github.com/gin-gonic/gin"
 	"github.com/stripe/stripe-go/v72"
 	"shaps.api/domain/exception"
@@ -27,18 +29,24 @@ func NewCreateUserInteractor(
 func (i *CreateUserInteractor) Excecute(c *gin.Context) exception.Wrapper {
 	uid, exists := c.Get("userId")
 	if !exists {
-		return exception.Wrapper{
+		e := exception.Wrapper{
 			Code:    exception.NotFoundCode,
 			Message: exception.NotFoundUserId,
+			Err:     errors.New("not found userId"),
 		}
+		e.Error()
+		return e
 	}
 
 	su, stripeErr := i.StripeClient.Customers.New(&stripe.CustomerParams{})
 	if stripeErr != nil {
-		return exception.Wrapper{
+		e := exception.Wrapper{
 			Code:    exception.InternalServerErrorCode,
 			Message: exception.StripeError,
+			Err:     stripeErr,
 		}
+		e.Error()
+		return e
 	}
 
 	u := entity.User{
