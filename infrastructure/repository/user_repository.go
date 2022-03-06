@@ -59,3 +59,31 @@ func (repo *UserRepository) Read(id string) (entity.User, exception.Wrapper) {
 
 	return u, exception.Wrapper{Code: exception.OkCode}
 }
+
+func (repo *UserRepository) CreateStripeConnect(id string, connectId string) (entity.User, exception.Wrapper) {
+	var u entity.User
+	findResult := repo.db.First(&u, "id = ?", id)
+	if findResult.Error != nil {
+		e := exception.Wrapper{
+			Code:    exception.InternalServerErrorCode,
+			Message: exception.DatabaseError,
+			Err:     findResult.Error,
+		}
+		e.Error()
+		return u, e
+	}
+
+	u.ConnectId = connectId
+	updateResult := repo.db.Save(&u)
+	if updateResult.Error != nil {
+		e := exception.Wrapper{
+			Code:    exception.InternalServerErrorCode,
+			Message: exception.DatabaseError,
+			Err:     findResult.Error,
+		}
+		e.Error()
+		return u, e
+	}
+
+	return u, exception.Wrapper{}
+}
