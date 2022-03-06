@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/goccy/go-json"
 	"github.com/google/uuid"
 	"shaps.api/core/constants"
 	"shaps.api/core/logger"
@@ -22,7 +23,10 @@ func HttpLogger(c *gin.Context) {
 	}
 
 	hostname, _ := os.Hostname()
-	uid, _ := c.Get("userId")
+	uid, exists := c.Get("userId")
+	if !exists {
+		log.Fatal("userId is not exists")
+	}
 	reqTs := start.UTC().Format("2006-01-02T15:04:05+09:00")
 	reqBody := make([]byte, c.Request.ContentLength)
 	c.Request.Body.Read(reqBody)
@@ -50,6 +54,7 @@ func HttpLogger(c *gin.Context) {
 	resHeader := c.Writer.Header()
 	statusCode := c.Writer.Status()
 	resBody, _ := c.Get("resBody")
+	jsonBody, _ := json.Marshal(resBody)
 
 	responseLog := types.HttpResponseLogType{
 		BaseLogType: types.BaseLogType{
@@ -63,7 +68,7 @@ func HttpLogger(c *gin.Context) {
 		Time:               strconv.FormatInt(end, 10),
 		ResponseHeaders:    resHeader,
 		ResponseStatusCode: strconv.FormatInt(int64(statusCode), 10),
-		ResponseBody:       resBody.(string),
+		ResponseBody:       string(jsonBody),
 	}
 	logger.Logger(responseLog, constants.HttpResponseLog)
 }

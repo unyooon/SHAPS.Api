@@ -42,6 +42,7 @@ func Logger(obj interface{}, logType int) {
 			zap.String("TraceId", log.TraceId),
 			zap.String("TimeStamp", log.TimeStamp),
 			zap.String("RequestHeaders", string(headers)),
+			zap.String("RequestUrl", string(log.RequestUrl)),
 			zap.String("RequestQueryString", log.RequestQueryString),
 			zap.String("RequestBody", log.RequestBody),
 		)
