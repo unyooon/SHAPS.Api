@@ -1,5 +1,40 @@
 basePath: /
 definitions:
+  dto.CreateStripeConnectRequest:
+    properties:
+      buisinessUrl:
+        type: string
+      dobDay:
+        type: integer
+      dobMonth:
+        type: integer
+      dobYear:
+        type: integer
+      email:
+        type: string
+      firstName:
+        type: string
+      firstNameKana:
+        type: string
+      lastName:
+        type: string
+      lastNameKana:
+        type: string
+      line1:
+        type: string
+      line2:
+        type: string
+      line2Kana:
+        type: string
+      mcc:
+        type: string
+      phone:
+        type: string
+      postalCode:
+        type: string
+      productionDescription:
+        type: string
+    type: object
   dto.CreateSubscriptionRequest:
     properties:
       description:
@@ -20,7 +55,47 @@ info:
   title: SHAPS API
   version: version(1.0)
 paths:
-  /me:
+  /me/stripe-connect:
+    post:
+      consumes:
+      - application/json
+      description: create stripeconnect
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateStripeConnectRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Create StripeConnect
+      tags:
+      - me
+  /subscriptions:
+    post:
+      consumes:
+      - application/json
+      description: create subscription
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateSubscriptionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Create Subscription
+      tags:
+      - subscription
+  /users:
     get:
       consumes:
       - application/json
@@ -45,24 +120,4 @@ paths:
       summary: Create User
       tags:
       - user
-  /subscriptions:
-    post:
-      consumes:
-      - application/json
-      description: create subscription
-      parameters:
-      - description: body
-        in: body
-        name: body
-        required: true
-        schema:
-          $ref: '#/definitions/dto.CreateSubscriptionRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: ""
-      summary: Create Subscription
-      tags:
-      - subscription
 swagger: "2.0"

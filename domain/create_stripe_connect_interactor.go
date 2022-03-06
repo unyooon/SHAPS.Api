@@ -14,12 +14,12 @@ import (
 
 type CreateStripeConnectInteractor struct {
 	UserRepository repository.UserRepositoryInterface
-	StripeClient   external.StripeClient
+	StripeClient   *external.StripeClient
 }
 
 func NewCreateStripeConnectInteractor(
 	r repository.UserRepositoryInterface,
-	sc external.StripeClient,
+	sc *external.StripeClient,
 ) *CreateStripeConnectInteractor {
 	return &CreateStripeConnectInteractor{
 		UserRepository: r,

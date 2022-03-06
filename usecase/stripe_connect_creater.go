@@ -6,5 +6,5 @@ import (
 )
 
 type StripeConnectCreater interface {
-	Excute(c *gin.Context) exception.Wrapper
+	Excecute(c *gin.Context) exception.Wrapper
 }

@@ -14,11 +14,13 @@ type Routing struct {
 	Setting setting.Setting
 	sc      *controller.SubscriptionController
 	uc      *controller.UserController
+	mc      *controller.MeController
 }
 
 func NewRouting(
 	sc *controller.SubscriptionController,
 	uc *controller.UserController,
+	mc *controller.MeController,
 	setting setting.Setting,
 ) *Routing {
 	r := &Routing{
@@ -26,6 +28,7 @@ func NewRouting(
 		Setting: setting,
 		sc:      sc,
 		uc:      uc,
+		mc:      mc,
 	}
 
 	r.Gin.Use(gin.Recovery())
@@ -42,6 +45,7 @@ func (r *Routing) setRouting() {
 		v1.POST("/subscriptions", func(c *gin.Context) { r.sc.Create(c) })
 		v1.POST("/users", func(c *gin.Context) { r.uc.Create(c) })
 		v1.GET("/users", func(c *gin.Context) { r.uc.Read(c) })
+		v1.POST("/me/stripe-connect", func(c *gin.Context) { r.mc.CreateStripeConnect(c) })
 	}
 }
 

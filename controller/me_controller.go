@@ -17,7 +17,16 @@ func NewMeController(
 	}
 }
 
+// CreateStripeConnect godoc
+// @Summary      Create StripeConnect
+// @Description  create stripeconnect
+// @Tags         me
+// @Accept       json
+// @Produce      json
+// @Param        body body dto.CreateStripeConnectRequest true "body"
+// @Success      200
+// @Router       /me/stripe-connect [post]
 func (mc *MeController) CreateStripeConnect(c *gin.Context) {
-	err := mc.createStripeConnect.Excute(c)
+	err := mc.createStripeConnect.Excecute(c)
 	Handler(c, nil, err)
 }
