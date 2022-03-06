@@ -14,14 +14,17 @@ var SuperSet = wire.NewSet(
 	// controller
 	controller.NewSubscriptionController,
 	controller.NewUserController,
+	controller.NewMeController,
 
 	// usecase
 	domain.NewCreateSubscriptionInteractor,
 	domain.NewCreateUserInteractor,
 	domain.NewReadUserInteractor,
+	domain.NewCreateStripeConnectInteractor,
 	wire.Bind(new(usecase.SubscriptionCreater), new(*domain.CreateSubscriptionInteractor)),
 	wire.Bind(new(usecase.UserCreater), new(*domain.CreateUserInteractor)),
 	wire.Bind(new(usecase.UserReader), new(*domain.ReadUserInteractor)),
+	wire.Bind(new(usecase.StripeConnectCreater), new(*domain.CreateStripeConnectInteractor)),
 
 	// repository
 	repository.NewSubscriptionRepository,

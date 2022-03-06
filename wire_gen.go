@@ -31,6 +31,8 @@ func InitializeHandler(s setting.Setting) *Routing {
 	createUserInteractor := domain.NewCreateUserInteractor(userRepository, stripeClient)
 	readUserInteractor := domain.NewReadUserInteractor(userRepository)
 	userController := controller.NewUserController(createUserInteractor, readUserInteractor)
-	routing := NewRouting(subscriptionController, userController, s)
+	createStripeConnectInteractor := domain.NewCreateStripeConnectInteractor(userRepository, stripeClient)
+	meController := controller.NewMeController(createStripeConnectInteractor)
+	routing := NewRouting(subscriptionController, userController, meController, s)
 	return routing
 }
