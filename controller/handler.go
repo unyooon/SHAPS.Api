@@ -7,6 +7,7 @@ import (
 
 func Handler(c *gin.Context, obj interface{}, err exception.Wrapper) {
 	if err.Code == exception.OkCode {
+		c.Set("resBody", obj)
 		c.JSON(int(err.Code), obj)
 		return
 	} else {

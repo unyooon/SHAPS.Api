@@ -32,7 +32,7 @@ func NewRouting(
 	}
 
 	r.Gin.Use(gin.Recovery())
-	r.Gin.Use(middleware.Logging)
+	r.Gin.Use(middleware.HttpLogger)
 	r.setRouting()
 
 	return r
