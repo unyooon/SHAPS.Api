@@ -1,9 +1,12 @@
 package domain
 
 import (
+	"bytes"
 	"encoding/json"
+	"io/ioutil"
 
 	"github.com/gin-gonic/gin"
+	"shaps.api/core/validatation"
 	"shaps.api/domain/dto"
 	"shaps.api/domain/exception"
 	"shaps.api/entity"
@@ -21,10 +24,14 @@ func NewCreateSubscriptionInteractor(r repository.SubscriptionRepositoryInterfac
 }
 
 func (i *CreateSubscriptionInteractor) Excecute(c *gin.Context) exception.Wrapper {
-	body := make([]byte, c.Request.ContentLength)
-	c.Request.Body.Read(body)
+	body, _ := ioutil.ReadAll(c.Request.Body)
+	c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(body))
 
 	req := new(dto.CreateSubscriptionRequest)
+	ve := validatation.RequestValidate(req, c)
+	if ve.Code == exception.BadRequestCode {
+		return ve
+	}
 	json.Unmarshal(body, &req)
 
 	s := entity.Subscription{

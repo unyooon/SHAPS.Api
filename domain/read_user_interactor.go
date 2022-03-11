@@ -29,7 +29,6 @@ func (i *ReadUserInteractor) Excecute(c *gin.Context) (dto.ReadUserResponse, exc
 			Message: exception.NotFoundUserId,
 			Err:     errors.New("not found userId"),
 		}
-		e.Error()
 		return dto.ReadUserResponse{}, e
 	}
 

@@ -2,7 +2,7 @@ package types
 
 type HttpExceptionType struct {
 	HttpStatusCode string
-	Message        string
+	ErrorMessage   string
 	Source         string
 	StackTrace     string
 }

@@ -41,6 +41,7 @@ func Logger(obj interface{}, logType int) {
 			zap.String("UserId", log.UserId),
 			zap.String("TraceId", log.TraceId),
 			zap.String("TimeStamp", log.TimeStamp),
+			zap.String("RequestMethod", log.RequestMethod),
 			zap.String("RequestHeaders", string(headers)),
 			zap.String("RequestUrl", string(log.RequestUrl)),
 			zap.String("RequestQueryString", log.RequestQueryString),
@@ -86,8 +87,8 @@ func Logger(obj interface{}, logType int) {
 			)
 		}
 
-		logger.Info(
-			"ResponseLog",
+		logger.Error(
+			"ErrorLog",
 			zap.String("ApplicationName", log.ApplicationName),
 			zap.String("HostName", log.HostName),
 			zap.String("Placement", log.Placement),
@@ -95,7 +96,7 @@ func Logger(obj interface{}, logType int) {
 			zap.String("TraceId", log.TraceId),
 			zap.String("TimeStamp", log.TimeStamp),
 			zap.String("HttpStatusCode", log.HttpStatusCode),
-			zap.String("Message", log.Message),
+			zap.String("ErrorMessage", log.ErrorMessage),
 			zap.String("Source", log.Source),
 			zap.String("StackTrace", log.StackTrace),
 		)

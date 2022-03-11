@@ -1,6 +1,8 @@
 package middleware
 
 import (
+	"bytes"
+	"io/ioutil"
 	"log"
 	"os"
 	"strconv"
@@ -12,6 +14,7 @@ import (
 	"shaps.api/core/constants"
 	"shaps.api/core/logger"
 	"shaps.api/core/types"
+	"shaps.api/domain/exception"
 )
 
 func HttpLogger(c *gin.Context) {
@@ -21,6 +24,7 @@ func HttpLogger(c *gin.Context) {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
+	c.Set("traceId", traceId)
 
 	hostname, _ := os.Hostname()
 	uid, exists := c.Get("userId")
@@ -28,8 +32,8 @@ func HttpLogger(c *gin.Context) {
 		log.Fatal("userId is not exists")
 	}
 	reqTs := start.UTC().Format("2006-01-02T15:04:05+09:00")
-	reqBody := make([]byte, c.Request.ContentLength)
-	c.Request.Body.Read(reqBody)
+	reqBody, _ := ioutil.ReadAll(c.Request.Body)
+	c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(reqBody))
 
 	requestLog := types.HttpRequestLogType{
 		BaseLogType: types.BaseLogType{
@@ -40,6 +44,7 @@ func HttpLogger(c *gin.Context) {
 			TraceId:         traceId.String(),
 			TimeStamp:       reqTs,
 		},
+		RequestMethod:      c.Request.Method,
 		RequestHeaders:     c.Request.Header,
 		RequestUrl:         c.Request.URL.Path,
 		RequestQueryString: c.Request.URL.RawQuery,
@@ -49,10 +54,32 @@ func HttpLogger(c *gin.Context) {
 
 	c.Next()
 
+	statusCode := c.Writer.Status()
+
+	e, exist := c.Get("err")
+	if exist {
+		httpExceptionLog := types.HttpExceptionLogType{
+			BaseLogType: types.BaseLogType{
+				ApplicationName: "SHAPS.Api",
+				HostName:        hostname,
+				Placement:       "shaps.api/middleware/http_logger",
+				UserId:          uid.(string),
+				TraceId:         traceId.String(),
+				TimeStamp:       reqTs,
+			},
+			HttpExceptionType: types.HttpExceptionType{
+				HttpStatusCode: strconv.FormatInt(int64(statusCode), 10),
+				ErrorMessage:   string(e.(exception.Wrapper).Err.Error()),
+				Source:         "SHAPS.Api",
+				StackTrace:     string(e.(exception.Wrapper).StackTrace),
+			},
+		}
+		logger.Logger(httpExceptionLog, constants.HttpExceptionResponseLog)
+	}
+
 	resTs := time.Now().UTC().Format("2006-01-02T15:04:05+09:00")
 	end := time.Since(start).Milliseconds()
 	resHeader := c.Writer.Header()
-	statusCode := c.Writer.Status()
 	resBody, _ := c.Get("resBody")
 	jsonBody, _ := json.Marshal(resBody)
 

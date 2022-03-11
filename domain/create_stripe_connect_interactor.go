@@ -1,11 +1,14 @@
 package domain
 
 import (
+	"bytes"
 	"encoding/json"
+	"io/ioutil"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/stripe/stripe-go/v72"
+	"shaps.api/core/validatation"
 	"shaps.api/domain/dto"
 	"shaps.api/domain/exception"
 	"shaps.api/infrastructure/external"
@@ -28,10 +31,14 @@ func NewCreateStripeConnectInteractor(
 }
 
 func (i *CreateStripeConnectInteractor) Excecute(c *gin.Context) exception.Wrapper {
-	body := make([]byte, c.Request.ContentLength)
-	c.Request.Body.Read(body)
+	body, _ := ioutil.ReadAll(c.Request.Body)
+	c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(body))
 
 	req := new(dto.CreateStripeConnectRequest)
+	ve := validatation.RequestValidate(req, c)
+	if ve.Code == exception.BadRequestCode {
+		return ve
+	}
 	json.Unmarshal(body, &req)
 
 	ip := c.ClientIP()
@@ -89,7 +96,6 @@ func (i *CreateStripeConnectInteractor) Excecute(c *gin.Context) exception.Wrapp
 			Message: exception.StripeError,
 			Err:     err,
 		}
-		e.Error()
 		return e
 	}
 

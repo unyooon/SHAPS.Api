@@ -34,7 +34,6 @@ func (i *CreateUserInteractor) Excecute(c *gin.Context) exception.Wrapper {
 			Message: exception.NotFoundUserId,
 			Err:     errors.New("not found userId"),
 		}
-		e.Error()
 		return e
 	}
 
@@ -45,7 +44,6 @@ func (i *CreateUserInteractor) Excecute(c *gin.Context) exception.Wrapper {
 			Message: exception.StripeError,
 			Err:     stripeErr,
 		}
-		e.Error()
 		return e
 	}
 

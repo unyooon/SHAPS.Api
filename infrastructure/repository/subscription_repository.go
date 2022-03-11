@@ -26,7 +26,6 @@ func (repo *SubscriptionRepository) Create(req entity.Subscription) (entity.Subs
 			Message: exception.DatabaseError,
 			Err:     err,
 		}
-		w.Error()
 		return req, w
 	}
 
