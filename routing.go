@@ -32,15 +32,16 @@ func NewRouting(
 	}
 
 	r.Gin.Use(gin.Recovery())
-	r.Gin.Use(middleware.Logging)
+	r.Gin.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	r.Gin.Use(middleware.ValidateToken(r.Setting))
+	r.Gin.Use(middleware.HttpLogger)
 	r.setRouting()
 
 	return r
 }
 
 func (r *Routing) setRouting() {
-	r.Gin.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	v1 := r.Gin.Group("/api/v1", middleware.ValidateToken(r.Setting))
+	v1 := r.Gin.Group("/api/v1")
 	{
 		v1.POST("/subscriptions", func(c *gin.Context) { r.sc.Create(c) })
 		v1.POST("/users", func(c *gin.Context) { r.uc.Create(c) })

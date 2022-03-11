@@ -37,7 +37,6 @@ func (repo *UserRepository) Create(req entity.User) (entity.User, exception.Wrap
 			Message: exception.DatabaseError,
 			Err:     result.Error,
 		}
-		e.Error()
 		return req, e
 	}
 
@@ -53,7 +52,6 @@ func (repo *UserRepository) Read(id string) (entity.User, exception.Wrapper) {
 			Message: exception.DatabaseError,
 			Err:     result.Error,
 		}
-		e.Error()
 		return u, e
 	}
 
@@ -69,7 +67,6 @@ func (repo *UserRepository) CreateStripeConnect(id string, connectId string) (en
 			Message: exception.DatabaseError,
 			Err:     findResult.Error,
 		}
-		e.Error()
 		return u, e
 	}
 
@@ -81,7 +78,6 @@ func (repo *UserRepository) CreateStripeConnect(id string, connectId string) (en
 			Message: exception.DatabaseError,
 			Err:     findResult.Error,
 		}
-		e.Error()
 		return u, e
 	}
 
