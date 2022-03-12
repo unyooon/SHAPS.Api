@@ -26,10 +26,10 @@ func NewCreateUserInteractor(
 	}
 }
 
-func (i *CreateUserInteractor) Execute(c *gin.Context) exception.Wrapper {
+func (i *CreateUserInteractor) Execute(c *gin.Context) exception.CustomException {
 	uid, exists := c.Get("userId")
 	if !exists {
-		e := exception.Wrapper{
+		e := exception.CustomException{
 			Code:    exception.NotFoundCode,
 			Message: exception.NotFoundUserId,
 			Err:     errors.New("not found userId"),
@@ -39,7 +39,7 @@ func (i *CreateUserInteractor) Execute(c *gin.Context) exception.Wrapper {
 
 	su, stripeErr := i.StripeClient.Customers.New(&stripe.CustomerParams{})
 	if stripeErr != nil {
-		e := exception.Wrapper{
+		e := exception.CustomException{
 			Code:    exception.InternalServerErrorCode,
 			Message: exception.StripeError,
 			Err:     stripeErr,

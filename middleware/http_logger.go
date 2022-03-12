@@ -69,9 +69,9 @@ func HttpLogger(c *gin.Context) {
 			},
 			HttpExceptionType: types.HttpExceptionType{
 				HttpStatusCode: strconv.FormatInt(int64(statusCode), 10),
-				ErrorMessage:   string(e.(exception.Wrapper).Err.Error()),
+				ErrorMessage:   string(e.(exception.CustomException).Err.Error()),
 				Source:         "SHAPS.Api",
-				StackTrace:     string(e.(exception.Wrapper).StackTrace),
+				StackTrace:     string(e.(exception.CustomException).StackTrace),
 			},
 		}
 		logger.Logger(httpExceptionLog, constants.HttpExceptionResponseLog)

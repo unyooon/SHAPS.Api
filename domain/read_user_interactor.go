@@ -21,10 +21,10 @@ func NewReadUserInteractor(
 	}
 }
 
-func (i *ReadUserInteractor) Execute(c *gin.Context) (dto.ReadUserResponse, exception.Wrapper) {
+func (i *ReadUserInteractor) Execute(c *gin.Context) (dto.ReadUserResponse, exception.CustomException) {
 	uid, exists := c.Get("userId")
 	if !exists {
-		e := exception.Wrapper{
+		e := exception.CustomException{
 			Code:    exception.NotFoundCode,
 			Message: exception.NotFoundUserId,
 			Err:     errors.New("not found userId"),

@@ -6,5 +6,5 @@ import (
 )
 
 type SubscriptionCreater interface {
-	Execute(c *gin.Context) exception.Wrapper
+	Execute(c *gin.Context) exception.CustomException
 }

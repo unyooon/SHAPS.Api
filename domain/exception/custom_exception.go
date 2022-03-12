@@ -2,16 +2,16 @@ package exception
 
 import "go.uber.org/zap"
 
-type Wrapper struct {
+type CustomException struct {
 	Code       Code
 	Message    Message
 	Err        error
 	StackTrace string
 }
 
-func NewWrapper(c Code, m Message, e error) *Wrapper {
+func NewCustomException(c Code, m Message, e error) *CustomException {
 	stack := zap.Stack("").String
-	return &Wrapper{
+	return &CustomException{
 		Code:       c,
 		Message:    m,
 		Err:        e,
