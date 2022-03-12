@@ -27,6 +27,6 @@ func NewMeController(
 // @Success      200
 // @Router       /me/stripe-connect [post]
 func (mc *MeController) CreateStripeConnect(c *gin.Context) {
-	err := mc.createStripeConnect.Excecute(c)
+	err := mc.createStripeConnect.Execute(c)
 	Handler(c, nil, err)
 }

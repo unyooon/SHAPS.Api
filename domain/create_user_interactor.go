@@ -26,7 +26,7 @@ func NewCreateUserInteractor(
 	}
 }
 
-func (i *CreateUserInteractor) Excecute(c *gin.Context) exception.Wrapper {
+func (i *CreateUserInteractor) Execute(c *gin.Context) exception.Wrapper {
 	uid, exists := c.Get("userId")
 	if !exists {
 		e := exception.Wrapper{

@@ -30,7 +30,7 @@ func NewCreateStripeConnectInteractor(
 	}
 }
 
-func (i *CreateStripeConnectInteractor) Excecute(c *gin.Context) exception.Wrapper {
+func (i *CreateStripeConnectInteractor) Execute(c *gin.Context) exception.Wrapper {
 	body, _ := ioutil.ReadAll(c.Request.Body)
 	c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(body))
 

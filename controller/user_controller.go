@@ -29,7 +29,7 @@ func NewUserController(
 // @Success      200
 // @Router       /users [post]
 func (uc *UserController) Create(c *gin.Context) {
-	err := uc.create.Excecute(c)
+	err := uc.create.Execute(c)
 	Handler(c, nil, err)
 }
 
@@ -42,6 +42,6 @@ func (uc *UserController) Create(c *gin.Context) {
 // @Success      200
 // @Router       /users [get]
 func (uc *UserController) Read(c *gin.Context) {
-	u, err := uc.read.Excecute(c)
+	u, err := uc.read.Execute(c)
 	Handler(c, u, err)
 }

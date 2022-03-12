@@ -21,7 +21,7 @@ func NewReadUserInteractor(
 	}
 }
 
-func (i *ReadUserInteractor) Excecute(c *gin.Context) (dto.ReadUserResponse, exception.Wrapper) {
+func (i *ReadUserInteractor) Execute(c *gin.Context) (dto.ReadUserResponse, exception.Wrapper) {
 	uid, exists := c.Get("userId")
 	if !exists {
 		e := exception.Wrapper{

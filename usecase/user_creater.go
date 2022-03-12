@@ -6,5 +6,5 @@ import (
 )
 
 type UserCreater interface {
-	Excecute(c *gin.Context) exception.Wrapper
+	Execute(c *gin.Context) exception.Wrapper
 }
