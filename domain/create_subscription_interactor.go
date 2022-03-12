@@ -23,7 +23,7 @@ func NewCreateSubscriptionInteractor(r repository.SubscriptionRepositoryInterfac
 	}
 }
 
-func (i *CreateSubscriptionInteractor) Execute(c *gin.Context) exception.CustomException {
+func (i *CreateSubscriptionInteractor) Execute(c *gin.Context) *exception.CustomException {
 	body, _ := ioutil.ReadAll(c.Request.Body)
 	c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(body))
 

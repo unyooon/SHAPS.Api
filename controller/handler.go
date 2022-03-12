@@ -8,12 +8,8 @@ import (
 	"shaps.api/domain/exception"
 )
 
-func Handler(c *gin.Context, obj interface{}, err exception.CustomException) {
-	if err.Code == exception.OkCode {
-		c.Set("resBody", obj)
-		c.JSON(int(err.Code), obj)
-		return
-	} else {
+func Handler(c *gin.Context, obj interface{}, err *exception.CustomException) {
+	if err != nil {
 		traceId, exists := c.Get("traceId")
 		if !exists {
 			traceIdErr := &exception.CustomException{
@@ -30,5 +26,9 @@ func Handler(c *gin.Context, obj interface{}, err exception.CustomException) {
 			Message: string(err.Message),
 			TraceId: traceId.(uuid.UUID).String(),
 		})
+	} else {
+		c.Set("resBody", obj)
+		c.JSON(200, obj)
+		return
 	}
 }

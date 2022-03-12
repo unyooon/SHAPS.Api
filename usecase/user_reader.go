@@ -7,5 +7,5 @@ import (
 )
 
 type UserReader interface {
-	Execute(c *gin.Context) (dto.ReadUserResponse, exception.CustomException)
+	Execute(c *gin.Context) (dto.ReadUserResponse, *exception.CustomException)
 }

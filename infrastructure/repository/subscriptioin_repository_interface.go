@@ -6,5 +6,5 @@ import (
 )
 
 type SubscriptionRepositoryInterface interface {
-	Create(req entity.Subscription) (entity.Subscription, exception.CustomException)
+	Create(req entity.Subscription) (entity.Subscription, *exception.CustomException)
 }

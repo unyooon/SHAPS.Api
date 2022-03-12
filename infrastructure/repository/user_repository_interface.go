@@ -6,7 +6,7 @@ import (
 )
 
 type UserRepositoryInterface interface {
-	Create(req entity.User) (entity.User, exception.CustomException)
-	Read(id string) (entity.User, exception.CustomException)
-	CreateStripeConnect(id string, connectId string) (entity.User, exception.CustomException)
+	Create(req entity.User) (entity.User, *exception.CustomException)
+	Read(id string) (entity.User, *exception.CustomException)
+	CreateStripeConnect(id string, connectId string) (entity.User, *exception.CustomException)
 }

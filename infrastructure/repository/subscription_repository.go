@@ -18,16 +18,16 @@ func NewSubscriptionRepository(db db.DbInterface) *SubscriptionRepository {
 	}
 }
 
-func (repo *SubscriptionRepository) Create(req entity.Subscription) (entity.Subscription, exception.CustomException) {
+func (repo *SubscriptionRepository) Create(req entity.Subscription) (entity.Subscription, *exception.CustomException) {
 	err := repo.db.Create(&req).Error
 	if err != nil {
-		w := exception.CustomException{
+		e := &exception.CustomException{
 			Code:    exception.InternalServerErrorCode,
 			Message: exception.DatabaseError,
 			Err:     err,
 		}
-		return req, w
+		return req, e
 	}
 
-	return req, exception.CustomException{Code: exception.OkCode}
+	return req, nil
 }

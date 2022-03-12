@@ -30,7 +30,7 @@ func NewCreateStripeConnectInteractor(
 	}
 }
 
-func (i *CreateStripeConnectInteractor) Execute(c *gin.Context) exception.CustomException {
+func (i *CreateStripeConnectInteractor) Execute(c *gin.Context) *exception.CustomException {
 	body, _ := ioutil.ReadAll(c.Request.Body)
 	c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(body))
 
@@ -91,7 +91,7 @@ func (i *CreateStripeConnectInteractor) Execute(c *gin.Context) exception.Custom
 
 	_, err := i.StripeClient.Account.New(params)
 	if err != nil {
-		e := exception.CustomException{
+		e := &exception.CustomException{
 			Code:    exception.InternalServerErrorCode,
 			Message: exception.StripeError,
 			Err:     err,
@@ -99,5 +99,5 @@ func (i *CreateStripeConnectInteractor) Execute(c *gin.Context) exception.Custom
 		return e
 	}
 
-	return exception.CustomException{Code: exception.OkCode}
+	return nil
 }

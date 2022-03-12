@@ -6,14 +6,14 @@ import (
 	"shaps.api/domain/exception"
 )
 
-func RequestValidate(obj interface{}, c *gin.Context) exception.CustomException {
+func RequestValidate(obj interface{}, c *gin.Context) *exception.CustomException {
 	if err := c.ShouldBindBodyWith(&obj, binding.JSON); err != nil {
-		e := exception.CustomException{
+		e := &exception.CustomException{
 			Code:    exception.BadRequestCode,
 			Message: exception.BadRequestMessage,
 			Err:     err,
 		}
 		return e
 	}
-	return exception.CustomException{}
+	return nil
 }
