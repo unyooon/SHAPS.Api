@@ -34,6 +34,23 @@ definitions:
         type: string
       productionDescription:
         type: string
+    required:
+    - buisinessUrl
+    - dobDay
+    - dobMonth
+    - dobYear
+    - email
+    - firstName
+    - firstNameKana
+    - lastName
+    - lastNameKana
+    - line1
+    - line2
+    - line2Kana
+    - mcc
+    - phone
+    - postalCode
+    - productionDescription
     type: object
   dto.CreateSubscriptionRequest:
     properties:
@@ -45,6 +62,23 @@ definitions:
         type: integer
       term:
         type: integer
+    required:
+    - description
+    - name
+    - price
+    - term
+    type: object
+  dto.ReadMeResponse:
+    properties:
+      id:
+        type: string
+    type: object
+  dto.ReadUserResponse:
+    properties:
+      icon:
+        type: string
+      id:
+        type: string
     type: object
 host: localhost:3000
 info:
@@ -55,6 +89,21 @@ info:
   title: SHAPS API
   version: version(1.0)
 paths:
+  /me:
+    get:
+      consumes:
+      - application/json
+      description: read me
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ReadMeResponse'
+      summary: Read Me
+      tags:
+      - me
   /me/stripe-connect:
     post:
       consumes:
@@ -104,7 +153,9 @@ paths:
       - application/json
       responses:
         "200":
-          description: ""
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ReadUserResponse'
       summary: Read User
       tags:
       - user

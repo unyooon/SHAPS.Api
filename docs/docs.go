@@ -26,6 +26,29 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/me": {
+            "get": {
+                "description": "read me",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "me"
+                ],
+                "summary": "Read Me",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ReadMeResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/me/stripe-connect": {
             "post": {
                 "description": "create stripeconnect",
@@ -103,7 +126,10 @@ var doc = `{
                 "summary": "Read User",
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ReadUserResponse"
+                        }
                     }
                 }
             },
@@ -130,6 +156,24 @@ var doc = `{
     "definitions": {
         "dto.CreateStripeConnectRequest": {
             "type": "object",
+            "required": [
+                "buisinessUrl",
+                "dobDay",
+                "dobMonth",
+                "dobYear",
+                "email",
+                "firstName",
+                "firstNameKana",
+                "lastName",
+                "lastNameKana",
+                "line1",
+                "line2",
+                "line2Kana",
+                "mcc",
+                "phone",
+                "postalCode",
+                "productionDescription"
+            ],
             "properties": {
                 "buisinessUrl": {
                     "type": "string"
@@ -183,6 +227,12 @@ var doc = `{
         },
         "dto.CreateSubscriptionRequest": {
             "type": "object",
+            "required": [
+                "description",
+                "name",
+                "price",
+                "term"
+            ],
             "properties": {
                 "description": {
                     "type": "string"
@@ -195,6 +245,25 @@ var doc = `{
                 },
                 "term": {
                     "type": "integer"
+                }
+            }
+        },
+        "dto.ReadMeResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.ReadUserResponse": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
                 }
             }
         }

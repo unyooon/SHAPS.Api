@@ -6,15 +6,31 @@ import (
 )
 
 type MeController struct {
-	createStripeConnect usecase.StripeConnectCreater
+	StripeConnectCreater usecase.StripeConnectCreater
+	MeReader             usecase.MeReader
 }
 
 func NewMeController(
 	scc usecase.StripeConnectCreater,
+	mr usecase.MeReader,
 ) *MeController {
 	return &MeController{
-		createStripeConnect: scc,
+		StripeConnectCreater: scc,
+		MeReader:             mr,
 	}
+}
+
+// ReadMe godoc
+// @Summary      Read Me
+// @Description  read me
+// @Tags         me
+// @Accept       json
+// @Produce      json
+// @Success      200 {object} dto.ReadMeResponse
+// @Router       /me [get]
+func (mc *MeController) ReadMe(c *gin.Context) {
+	res, err := mc.MeReader.Execute(c)
+	Handler(c, res, err)
 }
 
 // CreateStripeConnect godoc
@@ -27,6 +43,6 @@ func NewMeController(
 // @Success      200
 // @Router       /me/stripe-connect [post]
 func (mc *MeController) CreateStripeConnect(c *gin.Context) {
-	err := mc.createStripeConnect.Execute(c)
+	err := mc.StripeConnectCreater.Execute(c)
 	Handler(c, nil, err)
 }

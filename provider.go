@@ -21,10 +21,12 @@ var SuperSet = wire.NewSet(
 	domain.NewCreateUserInteractor,
 	domain.NewReadUserInteractor,
 	domain.NewCreateStripeConnectInteractor,
+	domain.NewReadMeInteractor,
 	wire.Bind(new(usecase.SubscriptionCreater), new(*domain.CreateSubscriptionInteractor)),
 	wire.Bind(new(usecase.UserCreater), new(*domain.CreateUserInteractor)),
 	wire.Bind(new(usecase.UserReader), new(*domain.ReadUserInteractor)),
 	wire.Bind(new(usecase.StripeConnectCreater), new(*domain.CreateStripeConnectInteractor)),
+	wire.Bind(new(usecase.MeReader), new(*domain.ReadMeInteractor)),
 
 	// repository
 	repository.NewSubscriptionRepository,
