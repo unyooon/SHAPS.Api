@@ -22,14 +22,14 @@ func HttpLogger(c *gin.Context) {
 
 	traceId, err := uuid.NewRandom()
 	if err != nil {
-		log.Fatal(err.Error())
+		log.Printf(err.Error())
 	}
 	c.Set("traceId", traceId)
 
 	hostname, _ := os.Hostname()
 	uid, exists := c.Get("userId")
 	if !exists {
-		log.Fatal("userId is not exists")
+		log.Printf("userId is not exists")
 	}
 	reqTs := start.UTC().Format("2006-01-02T15:04:05+09:00")
 	reqBody, _ := ioutil.ReadAll(c.Request.Body)

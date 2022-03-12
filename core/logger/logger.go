@@ -12,7 +12,7 @@ import (
 func Logger(obj interface{}, logType int) {
 	logger, zapErr := zap.NewProduction()
 	if zapErr != nil {
-		log.Fatal(zapErr.Error())
+		log.Printf(zapErr.Error())
 	}
 
 	if logType == constants.HttpRequestLog {
