@@ -1,8 +1,8 @@
 package dto
 
 type CreateSubscriptionRequest struct {
-	Name        string `column:"name" binding:"required"`
-	Price       int    `column:"price" binding:"required"`
-	Term        uint   `column:"term" binding:"required"`
-	Description string `column:"description" binding:"required"`
+	Name        string `json:"name" binding:"required"`
+	Price       int    `json:"price" binding:"required"`
+	Term        uint   `json:"term" binding:"required"`
+	Description string `json:"description" binding:"required"`
 }

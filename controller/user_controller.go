@@ -39,7 +39,7 @@ func (uc *UserController) Create(c *gin.Context) {
 // @Tags         user
 // @Accept       json
 // @Produce      json
-// @Success      200
+// @Success      200 {object} dto.ReadUserResponse
 // @Router       /users [get]
 func (uc *UserController) Read(c *gin.Context) {
 	u, err := uc.read.Execute(c)

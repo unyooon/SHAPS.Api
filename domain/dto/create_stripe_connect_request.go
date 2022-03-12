@@ -1,20 +1,20 @@
 package dto
 
 type CreateStripeConnectRequest struct {
-	Mcc                   string `column:"mcc" binding:"required"`
-	BuisinessUrl          string `column:"buisinessUrl" binding:"required"`
-	ProductionDescription string `column:"productionDescription" binding:"required"`
-	FirstName             string `column:"firstName" binding:"required"`
-	LastName              string `column:"lastName" binding:"required"`
-	FirstNameKana         string `column:"firstNameKana" binding:"required"`
-	LastNameKana          string `column:"lastNameKana" binding:"required"`
-	DobDay                int64  `column:"dobDay" binding:"required"`
-	DobMonth              int64  `column:"dobMonth" binding:"required"`
-	DobYear               int64  `column:"dobYear" binding:"required"`
-	PostalCode            string `column:"postalCode" binding:"required"`
-	Line1                 string `column:"line1" binding:"required"`
-	Line2                 string `column:"line2" binding:"required"`
-	Line2Kana             string `column:"line2" binding:"required"`
-	Email                 string `column:"email" binding:"required"`
-	Phone                 string `column:"phone" binding:"required"`
+	Mcc                   string `json:"mcc" binding:"required"`
+	BuisinessUrl          string `json:"buisinessUrl" binding:"required"`
+	ProductionDescription string `json:"productionDescription" binding:"required"`
+	FirstName             string `json:"firstName" binding:"required"`
+	LastName              string `json:"lastName" binding:"required"`
+	FirstNameKana         string `json:"firstNameKana" binding:"required"`
+	LastNameKana          string `json:"lastNameKana" binding:"required"`
+	DobDay                int64  `json:"dobDay" binding:"required"`
+	DobMonth              int64  `json:"dobMonth" binding:"required"`
+	DobYear               int64  `json:"dobYear" binding:"required"`
+	PostalCode            string `json:"postalCode" binding:"required"`
+	Line1                 string `json:"line1" binding:"required"`
+	Line2                 string `json:"line2" binding:"required"`
+	Line2Kana             string `json:"line2Kana" binding:"required"`
+	Email                 string `json:"email" binding:"required"`
+	Phone                 string `json:"phone" binding:"required"`
 }
