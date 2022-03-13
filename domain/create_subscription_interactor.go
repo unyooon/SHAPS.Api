@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 
 	"github.com/gin-gonic/gin"
-	"shaps.api/core/constants"
 	"shaps.api/core/validatation"
 	"shaps.api/domain/dto"
 	"shaps.api/domain/exception"
@@ -29,10 +28,10 @@ func (i *CreateSubscriptionInteractor) Execute(c *gin.Context) *exception.Custom
 	c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(body))
 
 	req := new(dto.CreateSubscriptionRequest)
-	ve := validatation.RequestValidate(req, c)
-	if ve.Code == constants.BadRequestCode {
+	if ve := validatation.RequestValidate(req, c); ve != nil {
 		return ve
 	}
+
 	json.Unmarshal(body, &req)
 
 	s := entity.Subscription{

@@ -47,6 +47,24 @@ var doc = `{
                         }
                     }
                 }
+            },
+            "put": {
+                "description": "update me",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "me"
+                ],
+                "summary": "Update Me",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
             }
         },
         "/me/stripe-connect": {
@@ -251,6 +269,9 @@ var doc = `{
         "dto.ReadMeResponse": {
             "type": "object",
             "properties": {
+                "icon": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "string"
                 }
