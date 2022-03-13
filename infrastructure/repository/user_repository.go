@@ -71,29 +71,3 @@ func (repo *UserRepository) Update(user entity.User) (entity.User, *exception.Cu
 	}
 	return user, nil
 }
-
-func (repo *UserRepository) CreateStripeConnect(id string, connectId string) (entity.User, *exception.CustomException) {
-	var u entity.User
-	findResult := repo.db.First(&u, "id = ?", id)
-	if findResult.Error != nil {
-		e := &exception.CustomException{
-			Code:    constants.InternalServerErrorCode,
-			Message: constants.DatabaseError,
-			Err:     findResult.Error,
-		}
-		return u, e
-	}
-
-	u.ConnectId = connectId
-	updateResult := repo.db.Save(&u)
-	if updateResult.Error != nil {
-		e := &exception.CustomException{
-			Code:    constants.InternalServerErrorCode,
-			Message: constants.DatabaseError,
-			Err:     findResult.Error,
-		}
-		return u, e
-	}
-
-	return u, nil
-}

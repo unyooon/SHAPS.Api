@@ -3,6 +3,7 @@ package domain
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"time"
 
@@ -41,6 +42,15 @@ func (i *CreateStripeConnectInteractor) Execute(c *gin.Context) *exception.Custo
 	}
 
 	json.Unmarshal(body, &req)
+
+	uid, exists := c.Get("userId")
+	if !exists {
+		return &exception.CustomException{
+			Code:    constants.NotFoundCode,
+			Message: constants.NotFoundUser,
+			Err:     errors.New("userId is not exists"),
+		}
+	}
 
 	ip := c.ClientIP()
 	time := time.Now().Unix()
@@ -90,7 +100,7 @@ func (i *CreateStripeConnectInteractor) Execute(c *gin.Context) *exception.Custo
 		},
 	}
 
-	_, err := i.StripeClient.Account.New(params)
+	connect, err := i.StripeClient.Account.New(params)
 	if err != nil {
 		e := &exception.CustomException{
 			Code:    constants.InternalServerErrorCode,
@@ -98,6 +108,17 @@ func (i *CreateStripeConnectInteractor) Execute(c *gin.Context) *exception.Custo
 			Err:     err,
 		}
 		return e
+	}
+
+	user, readErr := i.UserRepository.Read(uid.(string))
+	if readErr != nil {
+		return readErr
+	}
+
+	user.ConnectId = connect.ID
+
+	if _, updateErr := i.UserRepository.Update(user); updateErr != nil {
+		return updateErr
 	}
 
 	return nil
