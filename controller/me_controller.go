@@ -8,15 +8,18 @@ import (
 type MeController struct {
 	StripeConnectCreater usecase.StripeConnectCreater
 	MeReader             usecase.MeReader
+	MeUpdater            usecase.MeUpdater
 }
 
 func NewMeController(
 	scc usecase.StripeConnectCreater,
 	mr usecase.MeReader,
+	mu usecase.MeUpdater,
 ) *MeController {
 	return &MeController{
 		StripeConnectCreater: scc,
 		MeReader:             mr,
+		MeUpdater:            mu,
 	}
 }
 
@@ -31,6 +34,19 @@ func NewMeController(
 func (mc *MeController) ReadMe(c *gin.Context) {
 	res, err := mc.MeReader.Execute(c)
 	Handler(c, res, err)
+}
+
+// UpdateMe godoc
+// @Summary      Update Me
+// @Description  update me
+// @Tags         me
+// @Accept       json
+// @Produce      json
+// @Success      200
+// @Router       /me [put]
+func (mc *MeController) UpdateMe(c *gin.Context) {
+	err := mc.MeUpdater.Execute(c)
+	Handler(c, nil, err)
 }
 
 // CreateStripeConnect godoc

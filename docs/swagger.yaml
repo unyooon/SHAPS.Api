@@ -70,6 +70,8 @@ definitions:
     type: object
   dto.ReadMeResponse:
     properties:
+      icon:
+        type: string
       id:
         type: string
     type: object
@@ -102,6 +104,18 @@ paths:
           schema:
             $ref: '#/definitions/dto.ReadMeResponse'
       summary: Read Me
+      tags:
+      - me
+    put:
+      consumes:
+      - application/json
+      description: update me
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Update Me
       tags:
       - me
   /me/stripe-connect:

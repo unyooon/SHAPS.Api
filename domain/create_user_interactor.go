@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/stripe/stripe-go/v72"
+	"shaps.api/core/constants"
 	"shaps.api/domain/exception"
 	"shaps.api/entity"
 	"shaps.api/infrastructure/external"
@@ -30,8 +31,8 @@ func (i *CreateUserInteractor) Execute(c *gin.Context) *exception.CustomExceptio
 	uid, exists := c.Get("userId")
 	if !exists {
 		e := &exception.CustomException{
-			Code:    exception.NotFoundCode,
-			Message: exception.NotFoundUserId,
+			Code:    constants.NotFoundCode,
+			Message: constants.NotFoundUserId,
 			Err:     errors.New("not found userId"),
 		}
 		return e
@@ -40,8 +41,8 @@ func (i *CreateUserInteractor) Execute(c *gin.Context) *exception.CustomExceptio
 	su, stripeErr := i.StripeClient.Customers.New(&stripe.CustomerParams{})
 	if stripeErr != nil {
 		e := &exception.CustomException{
-			Code:    exception.InternalServerErrorCode,
-			Message: exception.StripeError,
+			Code:    constants.InternalServerErrorCode,
+			Message: constants.StripeError,
 			Err:     stripeErr,
 		}
 		return e

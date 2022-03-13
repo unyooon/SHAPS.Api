@@ -2,8 +2,10 @@ package repository
 
 import (
 	"errors"
+	"log"
 
 	"github.com/jinzhu/gorm"
+	"shaps.api/core/constants"
 	"shaps.api/domain/exception"
 	"shaps.api/entity"
 	"shaps.api/infrastructure/db"
@@ -25,16 +27,16 @@ func (repo *UserRepository) Create(req entity.User) (entity.User, *exception.Cus
 	err := repo.db.First(&u).Error
 	if !errors.Is(err, gorm.ErrRecordNotFound) {
 		return u, &exception.CustomException{
-			Code:    exception.BadRequestCode,
-			Message: exception.BadRequestAlreadyExistsMessage,
+			Code:    constants.BadRequestCode,
+			Message: constants.BadRequestAlreadyExistsMessage,
 		}
 	}
 
 	result := repo.db.Create(&req)
 	if result.Error != nil {
 		e := &exception.CustomException{
-			Code:    exception.InternalServerErrorCode,
-			Message: exception.DatabaseError,
+			Code:    constants.InternalServerErrorCode,
+			Message: constants.DatabaseError,
 			Err:     result.Error,
 		}
 		return req, e
@@ -48,8 +50,8 @@ func (repo *UserRepository) Read(id string) (entity.User, *exception.CustomExcep
 	result := repo.db.First(&u, "id = ?", id)
 	if result.Error != nil {
 		e := &exception.CustomException{
-			Code:    exception.InternalServerErrorCode,
-			Message: exception.DatabaseError,
+			Code:    constants.InternalServerErrorCode,
+			Message: constants.DatabaseError,
 			Err:     result.Error,
 		}
 		return u, e
@@ -58,13 +60,25 @@ func (repo *UserRepository) Read(id string) (entity.User, *exception.CustomExcep
 	return u, nil
 }
 
+func (repo *UserRepository) Update(user entity.User) (entity.User, *exception.CustomException) {
+	log.Print(user)
+	if err := repo.db.Save(&user).Error; err != nil {
+		return user, &exception.CustomException{
+			Code:    constants.InternalServerErrorCode,
+			Message: constants.DatabaseError,
+			Err:     err,
+		}
+	}
+	return user, nil
+}
+
 func (repo *UserRepository) CreateStripeConnect(id string, connectId string) (entity.User, *exception.CustomException) {
 	var u entity.User
 	findResult := repo.db.First(&u, "id = ?", id)
 	if findResult.Error != nil {
 		e := &exception.CustomException{
-			Code:    exception.InternalServerErrorCode,
-			Message: exception.DatabaseError,
+			Code:    constants.InternalServerErrorCode,
+			Message: constants.DatabaseError,
 			Err:     findResult.Error,
 		}
 		return u, e
@@ -74,8 +88,8 @@ func (repo *UserRepository) CreateStripeConnect(id string, connectId string) (en
 	updateResult := repo.db.Save(&u)
 	if updateResult.Error != nil {
 		e := &exception.CustomException{
-			Code:    exception.InternalServerErrorCode,
-			Message: exception.DatabaseError,
+			Code:    constants.InternalServerErrorCode,
+			Message: constants.DatabaseError,
 			Err:     findResult.Error,
 		}
 		return u, e

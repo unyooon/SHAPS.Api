@@ -44,6 +44,7 @@ func (r *Routing) setRouting() {
 	v1 := r.Gin.Group("/api/v1")
 	{
 		v1.GET("/me", func(c *gin.Context) { r.mc.ReadMe(c) })
+		v1.PUT("/me", func(c *gin.Context) { r.mc.UpdateMe(c) })
 		v1.POST("/me/stripe-connect", func(c *gin.Context) { r.mc.CreateStripeConnect(c) })
 
 		v1.GET("/users", func(c *gin.Context) { r.uc.Read(c) })

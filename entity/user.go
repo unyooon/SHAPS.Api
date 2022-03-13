@@ -7,6 +7,7 @@ type User struct {
 	StripeId  string         `column:"stripeId"`
 	ConnectId string         `column:"connectId"`
 	Icon      *string        `column:"icon"`
+	Name      *string        `column:"name"`
 	Host      []Subscription `column:"host" gorm:"many2many:hosts"`
 	Construct []Subscription `column:"contract" gorm:"many2many:constructs"`
 	CreatedAt time.Time      `column:"created_at"`

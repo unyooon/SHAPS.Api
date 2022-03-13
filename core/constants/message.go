@@ -1,4 +1,4 @@
-package exception
+package constants
 
 type Message string
 

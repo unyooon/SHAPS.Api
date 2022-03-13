@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/gin-gonic/gin"
+	"shaps.api/core/constants"
 	"shaps.api/domain/dto"
 	"shaps.api/domain/exception"
 	"shaps.api/infrastructure/repository"
@@ -25,8 +26,8 @@ func (i *ReadUserInteractor) Execute(c *gin.Context) (dto.ReadUserResponse, *exc
 	uid, exists := c.Get("userId")
 	if !exists {
 		e := &exception.CustomException{
-			Code:    exception.NotFoundCode,
-			Message: exception.NotFoundUserId,
+			Code:    constants.NotFoundCode,
+			Message: constants.NotFoundUserId,
 			Err:     errors.New("not found userId"),
 		}
 		return dto.ReadUserResponse{}, e

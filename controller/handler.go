@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"shaps.api/core/constants"
 	"shaps.api/domain/exception"
 )
 
@@ -13,8 +14,8 @@ func Handler(c *gin.Context, obj interface{}, err *exception.CustomException) {
 		traceId, exists := c.Get("traceId")
 		if !exists {
 			traceIdErr := &exception.CustomException{
-				Code:    exception.InternalServerErrorCode,
-				Message: exception.InternalServerErrorMessage,
+				Code:    constants.InternalServerErrorCode,
+				Message: constants.InternalServerErrorMessage,
 				Err:     errors.New("can not get traceId"),
 			}
 			c.Set("err", traceIdErr)
