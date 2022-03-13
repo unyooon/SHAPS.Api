@@ -2,6 +2,7 @@ package repository
 
 import (
 	"github.com/jinzhu/gorm"
+	"shaps.api/core/constants"
 	"shaps.api/domain/exception"
 	"shaps.api/entity"
 	"shaps.api/infrastructure/db"
@@ -22,8 +23,8 @@ func (repo *SubscriptionRepository) Create(req entity.Subscription) (entity.Subs
 	err := repo.db.Create(&req).Error
 	if err != nil {
 		e := &exception.CustomException{
-			Code:    exception.InternalServerErrorCode,
-			Message: exception.DatabaseError,
+			Code:    constants.InternalServerErrorCode,
+			Message: constants.DatabaseError,
 			Err:     err,
 		}
 		return req, e

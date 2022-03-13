@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/stripe/stripe-go/v72"
+	"shaps.api/core/constants"
 	"shaps.api/core/validatation"
 	"shaps.api/domain/dto"
 	"shaps.api/domain/exception"
@@ -36,7 +37,7 @@ func (i *CreateStripeConnectInteractor) Execute(c *gin.Context) *exception.Custo
 
 	req := new(dto.CreateStripeConnectRequest)
 	ve := validatation.RequestValidate(req, c)
-	if ve.Code == exception.BadRequestCode {
+	if ve.Code == constants.BadRequestCode {
 		return ve
 	}
 	json.Unmarshal(body, &req)
@@ -92,8 +93,8 @@ func (i *CreateStripeConnectInteractor) Execute(c *gin.Context) *exception.Custo
 	_, err := i.StripeClient.Account.New(params)
 	if err != nil {
 		e := &exception.CustomException{
-			Code:    exception.InternalServerErrorCode,
-			Message: exception.StripeError,
+			Code:    constants.InternalServerErrorCode,
+			Message: constants.StripeError,
 			Err:     err,
 		}
 		return e

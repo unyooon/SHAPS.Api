@@ -1,15 +1,18 @@
 package exception
 
-import "go.uber.org/zap"
+import (
+	"go.uber.org/zap"
+	"shaps.api/core/constants"
+)
 
 type CustomException struct {
-	Code       Code
-	Message    Message
+	Code       constants.Code
+	Message    constants.Message
 	Err        error
 	StackTrace string
 }
 
-func NewCustomException(c Code, m Message, e error) *CustomException {
+func NewCustomException(c constants.Code, m constants.Message, e error) *CustomException {
 	stack := zap.Stack("").String
 	return &CustomException{
 		Code:       c,
