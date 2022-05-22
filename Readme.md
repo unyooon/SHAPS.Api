@@ -1,4 +1,6 @@
 # SHAPS
+Subscription Hosting And Participation Service
+サブスクリプションホスティング＆参加サービス
 
 ## wire
 wireはDIで利用
