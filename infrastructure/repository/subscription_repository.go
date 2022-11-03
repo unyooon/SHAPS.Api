@@ -19,16 +19,25 @@ func NewSubscriptionRepository(db db.DbInterface) *SubscriptionRepository {
 	}
 }
 
-func (repo *SubscriptionRepository) Create(req entity.Subscription) (entity.Subscription, *exception.CustomException) {
-	err := repo.db.Create(&req).Error
-	if err != nil {
-		e := &exception.CustomException{
+func (repo *SubscriptionRepository) Create(user entity.User, subscription entity.Subscription) (entity.Subscription, *exception.CustomException) {
+	if err := repo.db.Model(&user).Association("Host").Append(subscription).Error; err != nil {
+		return subscription, &exception.CustomException{
 			Code:    constants.InternalServerErrorCode,
 			Message: constants.DatabaseError,
 			Err:     err,
 		}
-		return req, e
 	}
+	return subscription, nil
+}
 
-	return req, nil
+func (repo *SubscriptionRepository) 	ReadHosts(user entity.User) ([]entity.Subscription, *exception.CustomException) {
+	var hosts []entity.Subscription
+	if err := repo.db.Model(&user).Association("Host").Find(&hosts).Error; err != nil {
+		return hosts, &exception.CustomException{
+			Code:    constants.InternalServerErrorCode,
+			Message: constants.DatabaseError,
+			Err:     err,
+		}
+	}
+	return hosts, nil
 }

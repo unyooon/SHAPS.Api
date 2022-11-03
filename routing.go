@@ -46,6 +46,7 @@ func (r *Routing) setRouting() {
 		v1.GET("/me", func(c *gin.Context) { r.mc.ReadMe(c) })
 		v1.PUT("/me", func(c *gin.Context) { r.mc.UpdateMe(c) })
 		v1.POST("/me/stripe-connect", func(c *gin.Context) { r.mc.CreateStripeConnect(c) })
+		v1.GET("/me/hosts", func(c *gin.Context) { r.mc.ReadHosts(c) })
 
 		v1.GET("/users", func(c *gin.Context) { r.uc.Read(c) })
 		v1.POST("/users", func(c *gin.Context) { r.uc.Create(c) })
