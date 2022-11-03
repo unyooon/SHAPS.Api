@@ -67,6 +67,45 @@ var doc = `{
                 }
             }
         },
+        "/me/hosts": {
+            "get": {
+                "description": "read hosts",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "me"
+                ],
+                "summary": "Read Hosts",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page Size",
+                        "name": "size",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page Number",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ReadHostsResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/me/stripe-connect": {
             "post": {
                 "description": "create stripeconnect",
@@ -172,6 +211,23 @@ var doc = `{
         }
     },
     "definitions": {
+        "dto.BasePageResponse": {
+            "type": "object",
+            "properties": {
+                "number": {
+                    "type": "integer"
+                },
+                "size": {
+                    "type": "integer"
+                },
+                "totalElements": {
+                    "type": "integer"
+                },
+                "totalPages": {
+                    "type": "integer"
+                }
+            }
+        },
         "dto.CreateStripeConnectRequest": {
             "type": "object",
             "required": [
@@ -263,6 +319,43 @@ var doc = `{
                 },
                 "term": {
                     "type": "integer"
+                }
+            }
+        },
+        "dto.ReadHostResponse": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "integer"
+                },
+                "term": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.ReadHostsResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.ReadHostResponse"
+                    }
+                },
+                "page": {
+                    "$ref": "#/definitions/dto.BasePageResponse"
                 }
             }
         },

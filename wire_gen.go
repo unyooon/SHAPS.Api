@@ -24,9 +24,9 @@ import (
 func InitializeHandler(s setting.Setting) *Routing {
 	dbDb := db.NewDb(s)
 	subscriptionRepository := repository.NewSubscriptionRepository(dbDb)
-	createSubscriptionInteractor := domain.NewCreateSubscriptionInteractor(subscriptionRepository)
-	subscriptionController := controller.NewSubscriptionController(createSubscriptionInteractor)
 	userRepository := repository.NewUserRepository(dbDb)
+	createSubscriptionInteractor := domain.NewCreateSubscriptionInteractor(subscriptionRepository, userRepository)
+	subscriptionController := controller.NewSubscriptionController(createSubscriptionInteractor)
 	stripeClient := external.NewStripeClient(s)
 	createUserInteractor := domain.NewCreateUserInteractor(userRepository, stripeClient)
 	readUserInteractor := domain.NewReadUserInteractor(userRepository)
@@ -34,7 +34,8 @@ func InitializeHandler(s setting.Setting) *Routing {
 	createStripeConnectInteractor := domain.NewCreateStripeConnectInteractor(userRepository, stripeClient)
 	readMeInteractor := domain.NewReadMeInteractor(userRepository)
 	updateMeInteractor := domain.NewUpdateMeInteractor(userRepository)
-	meController := controller.NewMeController(createStripeConnectInteractor, readMeInteractor, updateMeInteractor)
+	readHostsInteractor := domain.NewReadHostsInteractor(userRepository, subscriptionRepository)
+	meController := controller.NewMeController(createStripeConnectInteractor, readMeInteractor, updateMeInteractor, readHostsInteractor)
 	routing := NewRouting(subscriptionController, userController, meController, s)
 	return routing
 }

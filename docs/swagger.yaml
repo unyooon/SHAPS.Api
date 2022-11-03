@@ -1,5 +1,16 @@
 basePath: /
 definitions:
+  dto.BasePageResponse:
+    properties:
+      number:
+        type: integer
+      size:
+        type: integer
+      totalElements:
+        type: integer
+      totalPages:
+        type: integer
+    type: object
   dto.CreateStripeConnectRequest:
     properties:
       buisinessUrl:
@@ -68,6 +79,30 @@ definitions:
     - price
     - term
     type: object
+  dto.ReadHostResponse:
+    properties:
+      createdAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: integer
+      term:
+        type: integer
+    type: object
+  dto.ReadHostsResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/dto.ReadHostResponse'
+        type: array
+      page:
+        $ref: '#/definitions/dto.BasePageResponse'
+    type: object
   dto.ReadMeResponse:
     properties:
       icon:
@@ -116,6 +151,32 @@ paths:
         "200":
           description: ""
       summary: Update Me
+      tags:
+      - me
+  /me/hosts:
+    get:
+      consumes:
+      - application/json
+      description: read hosts
+      parameters:
+      - description: Page Size
+        in: query
+        name: size
+        required: true
+        type: integer
+      - description: Page Number
+        in: query
+        name: page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ReadHostsResponse'
+      summary: Read Hosts
       tags:
       - me
   /me/stripe-connect:
