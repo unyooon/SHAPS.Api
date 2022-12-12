@@ -30,7 +30,7 @@ func (repo *SubscriptionRepository) Create(user entity.User, subscription entity
 	return subscription, nil
 }
 
-func (repo *SubscriptionRepository) 	ReadHosts(user entity.User) ([]entity.Subscription, *exception.CustomException) {
+func (repo *SubscriptionRepository) ReadHosts(user entity.User) ([]entity.Subscription, *exception.CustomException) {
 	var hosts []entity.Subscription
 	if err := repo.db.Model(&user).Association("Host").Find(&hosts).Error; err != nil {
 		return hosts, &exception.CustomException{
@@ -40,4 +40,32 @@ func (repo *SubscriptionRepository) 	ReadHosts(user entity.User) ([]entity.Subsc
 		}
 	}
 	return hosts, nil
+}
+
+func (repo *SubscriptionRepository) ReadSubscription(id uint) (entity.Subscription, *exception.CustomException) {
+
+	var s entity.Subscription
+	result := repo.db.First(&s, "id = ?", id)
+	if result.Error != nil {
+		e := &exception.CustomException{
+			Code:    constants.InternalServerErrorCode,
+			Message: constants.DatabaseError,
+			Err:     result.Error,
+		}
+		return s, e
+	}
+
+	return s, nil
+}
+
+func (repo *SubscriptionRepository) JoinSubscription(user entity.User, subscription entity.Subscription) (*exception.CustomException) {
+	if err:= repo.db.Model(&user).Association("Construct").Append(&entity.Construct{SubscriptionID: subscription.ID}).Error; err != nil {
+		return &exception.CustomException{
+			Code: constants.InternalServerErrorCode,
+			Message: constants.DatabaseError,
+			Err: err,
+		}
+	}
+
+	return nil
 }

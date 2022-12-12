@@ -7,11 +7,13 @@ import (
 
 type SubscriptionController struct {
 	create usecase.SubscriptionCreater
+	join   usecase.SubscriptionJoiner
 }
 
-func NewSubscriptionController(uc usecase.SubscriptionCreater) *SubscriptionController {
+func NewSubscriptionController(uc usecase.SubscriptionCreater, uj usecase.SubscriptionJoiner) *SubscriptionController {
 	return &SubscriptionController{
 		create: uc,
+		join: uj,
 	}
 }
 
@@ -26,5 +28,17 @@ func NewSubscriptionController(uc usecase.SubscriptionCreater) *SubscriptionCont
 // @Router       /subscriptions [post]
 func (sc *SubscriptionController) Create(c *gin.Context) {
 	result := sc.create.Execute(c)
+	Handler(c, nil, result)
+}
+
+// CreateSubscription godoc
+// @Summary      Join Subscription
+// @Description  join subscription
+// @Tags         subscription
+// @Accept       json
+// @Produce      json
+// @Router       /subscriptions/{subscriptionId}/join [post]
+func (sc *SubscriptionController) Join(c *gin.Context) {
+	result := sc.join.Execute(c)
 	Handler(c, nil, result)
 }

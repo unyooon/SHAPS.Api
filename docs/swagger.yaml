@@ -219,6 +219,17 @@ paths:
       summary: Create Subscription
       tags:
       - subscription
+  /subscriptions/{subscriptionId}/join:
+    post:
+      consumes:
+      - application/json
+      description: join subscription
+      produces:
+      - application/json
+      responses: {}
+      summary: Join Subscription
+      tags:
+      - subscription
   /users:
     get:
       consumes:

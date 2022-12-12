@@ -168,6 +168,22 @@ var doc = `{
                 }
             }
         },
+        "/subscriptions/{subscriptionId}/join": {
+            "post": {
+                "description": "join subscription",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subscription"
+                ],
+                "summary": "Join Subscription",
+                "responses": {}
+            }
+        },
         "/users": {
             "get": {
                 "description": "read user",
