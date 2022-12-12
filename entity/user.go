@@ -12,5 +12,5 @@ type User struct {
 	Contract []Contract    `column:"contract"`
 	CreatedAt time.Time      `column:"created_at"`
 	UpdatedAt time.Time      `column:"updated_at"`
-	DeletedAt *time.Time     `column:"deleted_at"`
+	CanceldAt *time.Time     `column:"canceld_at"`
 }

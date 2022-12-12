@@ -212,6 +212,17 @@ paths:
       summary: Read Contracts
       tags:
       - me
+  /me/contracts/{contractId}:
+    delete:
+      consumes:
+      - application/json
+      description: cancel contracts
+      produces:
+      - application/json
+      responses: {}
+      summary: Cancel Contracts
+      tags:
+      - me
   /me/hosts:
     get:
       consumes:

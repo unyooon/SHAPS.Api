@@ -37,7 +37,8 @@ func InitializeHandler(s setting.Setting) *Routing {
 	updateMeInteractor := domain.NewUpdateMeInteractor(userRepository)
 	readHostsInteractor := domain.NewReadHostsInteractor(userRepository, subscriptionRepository)
 	readContractsInteractor := domain.NewReadContractsInteractor(userRepository, subscriptionRepository)
-	meController := controller.NewMeController(createStripeConnectInteractor, readMeInteractor, updateMeInteractor, readHostsInteractor, readContractsInteractor)
+	cancelContractInteractor := domain.NewCancelContractInteractor(subscriptionRepository, userRepository)
+	meController := controller.NewMeController(createStripeConnectInteractor, readMeInteractor, updateMeInteractor, readHostsInteractor, readContractsInteractor, cancelContractInteractor)
 	routing := NewRouting(subscriptionController, userController, meController, s)
 	return routing
 }

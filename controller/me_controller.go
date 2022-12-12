@@ -11,6 +11,7 @@ type MeController struct {
 	MeUpdater            usecase.MeUpdater
 	HostsReader usecase.HostsReader
 	ContractsReader usecase.ContractsReader
+	ContractsCanceler usecase.ContractsCanceler
 }
 
 func NewMeController(
@@ -19,13 +20,15 @@ func NewMeController(
 	mu usecase.MeUpdater,
 	hr usecase.HostsReader,
 	cr usecase.ContractsReader,
+	cd usecase.ContractsCanceler,
 ) *MeController {
 	return &MeController{
 		StripeConnectCreater: scc,
 		MeReader:             mr,
 		MeUpdater:            mu,
-		HostsReader: hr,
-		ContractsReader: cr,
+		HostsReader: 					hr,
+		ContractsReader: 			cr,
+		ContractsCanceler: 		cd,
 	}
 }
 
@@ -97,4 +100,17 @@ func (mc *MeController) ReadHosts(c *gin.Context) {
 func (mc *MeController) ReadContracts(c *gin.Context) {
 	res, err := mc.ContractsReader.Execute(c)
 	Handler(c, res, err)
+}
+
+// ReadContracts godoc
+// @Summary      Cancel Contracts
+// @Description  cancel contracts
+// @Tags         me
+// @Accept       json
+// @Produce      json
+// @Error        xxx {object} exception.CustomException
+// @Router       /me/contracts/{contractId} [delete]
+func (mc *MeController) CancelContracts(c *gin.Context) {
+	err := mc.ContractsCanceler.Execute(c)
+	Handler(c, nil, err)
 }

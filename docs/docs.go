@@ -106,6 +106,22 @@ var doc = `{
                 }
             }
         },
+        "/me/contracts/{contractId}": {
+            "delete": {
+                "description": "cancel contracts",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "me"
+                ],
+                "summary": "Cancel Contracts",
+                "responses": {}
+            }
+        },
         "/me/hosts": {
             "get": {
                 "description": "read hosts",
