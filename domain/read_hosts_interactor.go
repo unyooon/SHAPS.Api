@@ -5,15 +5,12 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"shaps.api/core/constants"
+	"shaps.api/core/helper"
+	"shaps.api/core/types"
 	"shaps.api/domain/dto"
 	"shaps.api/domain/exception"
 	"shaps.api/infrastructure/repository"
 )
-
-type Query struct {
-	Page int `form:"page"`
-	Size int `form:"size"`
-}
 
 type ReadHostsInteractor struct {
 	UserRepository repository.UserRepositoryInterface
@@ -41,22 +38,10 @@ func (i *ReadHostsInteractor) Execute(c *gin.Context) (dto.ReadHostsResponse, *e
 		return dto.ReadHostsResponse{}, e
 	}
 
-	var query Query
-	if err := c.ShouldBindQuery(&query); err != nil {
-		e := &exception.CustomException{
-			Code: constants.BadRequestCode,
-			Message: constants.BadRequestMessage,
-			Err: err,
-		}
-		return dto.ReadHostsResponse{}, e
-	}
-
-
-	if query.Size <= 0 || query.Size > 50 {
-		query.Size = 50
-	}
-	if query.Page <= 0 {
-		query.Page = 1
+	var query types.Query
+	query, qErr := helper.PaginationHelper(c, query, 50)
+	if qErr != nil {
+		return dto.ReadHostsResponse{}, qErr
 	}
 
 	u, userErr := i.UserRepository.Read(uid.(string))

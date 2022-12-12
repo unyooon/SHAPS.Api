@@ -24,11 +24,11 @@ func NewUserRepository(db db.DbInterface) *UserRepository {
 
 func (repo *UserRepository) Create(req entity.User) (entity.User, *exception.CustomException) {
 	var u entity.User
-	err := repo.db.First(&u).Error
-	if !errors.Is(err, gorm.ErrRecordNotFound) {
+	if err := repo.db.First(&u).Error; !errors.Is(err, gorm.ErrRecordNotFound) {
 		return u, &exception.CustomException{
 			Code:    constants.BadRequestCode,
 			Message: constants.BadRequestAlreadyExistsMessage,
+			Err: errors.New("record is found"),
 		}
 	}
 

@@ -67,6 +67,45 @@ var doc = `{
                 }
             }
         },
+        "/me/constructs": {
+            "get": {
+                "description": "read constructs",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "me"
+                ],
+                "summary": "Read Constructs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page Size",
+                        "name": "size",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page Number",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ReadConstructsResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/me/hosts": {
             "get": {
                 "description": "read hosts",
@@ -326,6 +365,57 @@ var doc = `{
             "properties": {
                 "description": {
                     "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "integer"
+                },
+                "term": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.ReadConstructResponse": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "subscription": {
+                    "$ref": "#/definitions/dto.ReadConstructsSubscriptionResponse"
+                }
+            }
+        },
+        "dto.ReadConstructsResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.ReadConstructResponse"
+                    }
+                },
+                "page": {
+                    "$ref": "#/definitions/dto.BasePageResponse"
+                }
+            }
+        },
+        "dto.ReadConstructsSubscriptionResponse": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
                 },
                 "name": {
                     "type": "string"

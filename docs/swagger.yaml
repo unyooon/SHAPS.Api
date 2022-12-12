@@ -79,6 +79,39 @@ definitions:
     - price
     - term
     type: object
+  dto.ReadConstructResponse:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      subscription:
+        $ref: '#/definitions/dto.ReadConstructsSubscriptionResponse'
+    type: object
+  dto.ReadConstructsResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/dto.ReadConstructResponse'
+        type: array
+      page:
+        $ref: '#/definitions/dto.BasePageResponse'
+    type: object
+  dto.ReadConstructsSubscriptionResponse:
+    properties:
+      createdAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: integer
+      term:
+        type: integer
+    type: object
   dto.ReadHostResponse:
     properties:
       createdAt:
@@ -151,6 +184,32 @@ paths:
         "200":
           description: ""
       summary: Update Me
+      tags:
+      - me
+  /me/constructs:
+    get:
+      consumes:
+      - application/json
+      description: read constructs
+      parameters:
+      - description: Page Size
+        in: query
+        name: size
+        required: true
+        type: integer
+      - description: Page Number
+        in: query
+        name: page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ReadConstructsResponse'
+      summary: Read Constructs
       tags:
       - me
   /me/hosts:
