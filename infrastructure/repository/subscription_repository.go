@@ -55,9 +55,15 @@ func (repo *SubscriptionRepository) ReadContracts(user entity.User) ([]entity.Co
 	return contracts, nil
 }
 
-func (repo *SubscriptionRepository) ReadContract(id uint) (entity.Contract, *exception.CustomException) {
+func (repo *SubscriptionRepository) ReadContract(user entity.User, id uint) (entity.Contract, *exception.CustomException) {
 	var c entity.Contract
-	if err := repo.db.Preload("Subscription").First(&c, "id = ?", id).Error; err != nil {
+	if err := repo.db.Preload("Subscription").Model(&user).Where("id = ?", id).Association("Contract").Find(&c).Error; errors.Is(err, gorm.ErrRecordNotFound) {
+		return c, &exception.CustomException{
+			Code:    constants.NotFoundCode,
+			Message: constants.NotFoundMessage,
+			Err:     err,
+		}
+	} else if err != nil {
 		return c, &exception.CustomException{
 			Code:    constants.InternalServerErrorCode,
 			Message: constants.DatabaseError,
@@ -95,6 +101,18 @@ func (repo *SubscriptionRepository) JoinSubscription(user entity.User, subscript
 	}
 
 	if err:= repo.db.Model(&user).Association("Contract").Append(&entity.Contract{SubscriptionID: subscription.ID}).Error; err != nil {
+		return &exception.CustomException{
+			Code: constants.InternalServerErrorCode,
+			Message: constants.DatabaseError,
+			Err: err,
+		}
+	}
+
+	return nil
+}
+
+func (repo *SubscriptionRepository) CancelContract(contract entity.Contract) *exception.CustomException {
+	if err := repo.db.Delete(&contract).Error; err != nil {
 		return &exception.CustomException{
 			Code: constants.InternalServerErrorCode,
 			Message: constants.DatabaseError,
