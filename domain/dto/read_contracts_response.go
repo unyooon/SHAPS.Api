@@ -1,17 +1,17 @@
 package dto
 
-type ReadConstructsResponse struct {
+type ReadContractsResponse struct {
 	Page BasePageResponse
-	Data []ReadConstructResponse
+	Data []ReadContractResponse
 }
 
-type ReadConstructResponse struct {
+type ReadContractResponse struct {
 	ID          uint   															`json:"id"`
 	CreatedAt   string 															`json:"createdAt"`
-	Subscription ReadConstructsSubscriptionResponse `json:"subscription"`
+	Subscription ReadContractsSubscriptionResponse `json:"subscription"`
 }
 
-type ReadConstructsSubscriptionResponse struct {
+type ReadContractsSubscriptionResponse struct {
 	ID          uint   `json:"id"`
 	Name        string `json:"name"`
 	Price       int    `json:"price"`

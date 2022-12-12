@@ -10,7 +10,7 @@ type MeController struct {
 	MeReader             usecase.MeReader
 	MeUpdater            usecase.MeUpdater
 	HostsReader usecase.HostsReader
-	ConstructsReader usecase.ConstructsReader
+	ContractsReader usecase.ContractsReader
 }
 
 func NewMeController(
@@ -18,14 +18,14 @@ func NewMeController(
 	mr usecase.MeReader,
 	mu usecase.MeUpdater,
 	hr usecase.HostsReader,
-	cr usecase.ConstructsReader,
+	cr usecase.ContractsReader,
 ) *MeController {
 	return &MeController{
 		StripeConnectCreater: scc,
 		MeReader:             mr,
 		MeUpdater:            mu,
 		HostsReader: hr,
-		ConstructsReader: cr,
+		ContractsReader: cr,
 	}
 }
 
@@ -84,17 +84,17 @@ func (mc *MeController) ReadHosts(c *gin.Context) {
 	Handler(c, res, err)
 }
 
-// ReadConstructs godoc
-// @Summary      Read Constructs
-// @Description  read constructs
+// ReadContracts godoc
+// @Summary      Read Contracts
+// @Description  read contracts
 // @Tags         me
 // @Accept       json
 // @Produce      json
 // @Param 			 size query int true "Page Size"
 // @Param 			 page query int true "Page Number"
-// @Success      200 {object} dto.ReadConstructsResponse
-// @Router       /me/constructs [get]
-func (mc *MeController) ReadConstructs(c *gin.Context) {
-	res, err := mc.ConstructsReader.Execute(c)
+// @Success      200 {object} dto.ReadContractsResponse
+// @Router       /me/contracts [get]
+func (mc *MeController) ReadContracts(c *gin.Context) {
+	res, err := mc.ContractsReader.Execute(c)
 	Handler(c, res, err)
 }
