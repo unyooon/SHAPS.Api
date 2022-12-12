@@ -79,25 +79,25 @@ definitions:
     - price
     - term
     type: object
-  dto.ReadConstructResponse:
+  dto.ReadContractResponse:
     properties:
       createdAt:
         type: string
       id:
         type: integer
       subscription:
-        $ref: '#/definitions/dto.ReadConstructsSubscriptionResponse'
+        $ref: '#/definitions/dto.ReadContractsSubscriptionResponse'
     type: object
-  dto.ReadConstructsResponse:
+  dto.ReadContractsResponse:
     properties:
       data:
         items:
-          $ref: '#/definitions/dto.ReadConstructResponse'
+          $ref: '#/definitions/dto.ReadContractResponse'
         type: array
       page:
         $ref: '#/definitions/dto.BasePageResponse'
     type: object
-  dto.ReadConstructsSubscriptionResponse:
+  dto.ReadContractsSubscriptionResponse:
     properties:
       createdAt:
         type: string
@@ -186,11 +186,11 @@ paths:
       summary: Update Me
       tags:
       - me
-  /me/constructs:
+  /me/contracts:
     get:
       consumes:
       - application/json
-      description: read constructs
+      description: read contracts
       parameters:
       - description: Page Size
         in: query
@@ -208,8 +208,8 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.ReadConstructsResponse'
-      summary: Read Constructs
+            $ref: '#/definitions/dto.ReadContractsResponse'
+      summary: Read Contracts
       tags:
       - me
   /me/hosts:

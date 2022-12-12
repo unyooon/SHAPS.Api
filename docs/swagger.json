@@ -53,9 +53,9 @@
                 }
             }
         },
-        "/me/constructs": {
+        "/me/contracts": {
             "get": {
-                "description": "read constructs",
+                "description": "read contracts",
                 "consumes": [
                     "application/json"
                 ],
@@ -65,7 +65,7 @@
                 "tags": [
                     "me"
                 ],
-                "summary": "Read Constructs",
+                "summary": "Read Contracts",
                 "parameters": [
                     {
                         "type": "integer",
@@ -86,7 +86,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.ReadConstructsResponse"
+                            "$ref": "#/definitions/dto.ReadContractsResponse"
                         }
                     }
                 }
@@ -363,7 +363,7 @@
                 }
             }
         },
-        "dto.ReadConstructResponse": {
+        "dto.ReadContractResponse": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -373,17 +373,17 @@
                     "type": "integer"
                 },
                 "subscription": {
-                    "$ref": "#/definitions/dto.ReadConstructsSubscriptionResponse"
+                    "$ref": "#/definitions/dto.ReadContractsSubscriptionResponse"
                 }
             }
         },
-        "dto.ReadConstructsResponse": {
+        "dto.ReadContractsResponse": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.ReadConstructResponse"
+                        "$ref": "#/definitions/dto.ReadContractResponse"
                     }
                 },
                 "page": {
@@ -391,7 +391,7 @@
                 }
             }
         },
-        "dto.ReadConstructsSubscriptionResponse": {
+        "dto.ReadContractsSubscriptionResponse": {
             "type": "object",
             "properties": {
                 "createdAt": {

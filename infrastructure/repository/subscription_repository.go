@@ -44,19 +44,19 @@ func (repo *SubscriptionRepository) ReadHosts(user entity.User) ([]entity.Subscr
 	return hosts, nil
 }
 
-func (repo *SubscriptionRepository) ReadConstructs(user entity.User) ([]entity.Construct, *exception.CustomException) { var constructs []entity.Construct
-	if err := repo.db.Preload("Subscription").Model(&user).Association("Construct").Find(&constructs).Error; err != nil {
-		return constructs, &exception.CustomException{
+func (repo *SubscriptionRepository) ReadContracts(user entity.User) ([]entity.Contract, *exception.CustomException) { var contracts []entity.Contract
+	if err := repo.db.Preload("Subscription").Model(&user).Association("Contract").Find(&contracts).Error; err != nil {
+		return contracts, &exception.CustomException{
 			Code:    constants.InternalServerErrorCode,
 			Message: constants.DatabaseError,
 			Err:     err,
 		}
 	}
-	return constructs, nil
+	return contracts, nil
 }
 
-func (repo *SubscriptionRepository) ReadConstruct(id uint) (entity.Construct, *exception.CustomException) {
-	var c entity.Construct
+func (repo *SubscriptionRepository) ReadContract(id uint) (entity.Contract, *exception.CustomException) {
+	var c entity.Contract
 	if err := repo.db.Preload("Subscription").First(&c, "id = ?", id).Error; err != nil {
 		return c, &exception.CustomException{
 			Code:    constants.InternalServerErrorCode,
@@ -85,7 +85,7 @@ func (repo *SubscriptionRepository) ReadSubscription(id uint) (entity.Subscripti
 }
 
 func (repo *SubscriptionRepository) JoinSubscription(user entity.User, subscription entity.Subscription) (*exception.CustomException) {
-	var c entity.Construct
+	var c entity.Contract
 	if err := repo.db.First(&c, "subscription_id = ?", subscription.ID).Error; !errors.Is(err, gorm.ErrRecordNotFound) {
 		return &exception.CustomException{
 			Code:    constants.BadRequestCode,
@@ -94,7 +94,7 @@ func (repo *SubscriptionRepository) JoinSubscription(user entity.User, subscript
 		}
 	}
 
-	if err:= repo.db.Model(&user).Association("Construct").Append(&entity.Construct{SubscriptionID: subscription.ID}).Error; err != nil {
+	if err:= repo.db.Model(&user).Association("Contract").Append(&entity.Contract{SubscriptionID: subscription.ID}).Error; err != nil {
 		return &exception.CustomException{
 			Code: constants.InternalServerErrorCode,
 			Message: constants.DatabaseError,

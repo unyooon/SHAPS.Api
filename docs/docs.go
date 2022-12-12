@@ -67,9 +67,9 @@ var doc = `{
                 }
             }
         },
-        "/me/constructs": {
+        "/me/contracts": {
             "get": {
-                "description": "read constructs",
+                "description": "read contracts",
                 "consumes": [
                     "application/json"
                 ],
@@ -79,7 +79,7 @@ var doc = `{
                 "tags": [
                     "me"
                 ],
-                "summary": "Read Constructs",
+                "summary": "Read Contracts",
                 "parameters": [
                     {
                         "type": "integer",
@@ -100,7 +100,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.ReadConstructsResponse"
+                            "$ref": "#/definitions/dto.ReadContractsResponse"
                         }
                     }
                 }
@@ -377,7 +377,7 @@ var doc = `{
                 }
             }
         },
-        "dto.ReadConstructResponse": {
+        "dto.ReadContractResponse": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -387,17 +387,17 @@ var doc = `{
                     "type": "integer"
                 },
                 "subscription": {
-                    "$ref": "#/definitions/dto.ReadConstructsSubscriptionResponse"
+                    "$ref": "#/definitions/dto.ReadContractsSubscriptionResponse"
                 }
             }
         },
-        "dto.ReadConstructsResponse": {
+        "dto.ReadContractsResponse": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.ReadConstructResponse"
+                        "$ref": "#/definitions/dto.ReadContractResponse"
                     }
                 },
                 "page": {
@@ -405,7 +405,7 @@ var doc = `{
                 }
             }
         },
-        "dto.ReadConstructsSubscriptionResponse": {
+        "dto.ReadContractsSubscriptionResponse": {
             "type": "object",
             "properties": {
                 "createdAt": {

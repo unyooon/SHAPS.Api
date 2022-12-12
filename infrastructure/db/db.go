@@ -32,5 +32,5 @@ func (d *Db) Connect() *gorm.DB {
 func (d *Db) autoMigration() {
 	d.Connection.AutoMigrate(&entity.Subscription{})
 	d.Connection.AutoMigrate(&entity.User{})
-	d.Connection.AutoMigrate(&entity.Construct{})
+	d.Connection.AutoMigrate(&entity.Contract{})
 }
