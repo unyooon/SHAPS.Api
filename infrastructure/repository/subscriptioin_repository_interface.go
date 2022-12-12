@@ -8,4 +8,6 @@ import (
 type SubscriptionRepositoryInterface interface {
 	Create(user entity.User, subscription entity.Subscription) (entity.Subscription, *exception.CustomException)
 	ReadHosts(user entity.User) ([]entity.Subscription, *exception.CustomException)
+	JoinSubscription(user entity.User, subscription entity.Subscription) (*exception.CustomException)
+	ReadSubscription(id uint) (entity.Subscription, *exception.CustomException)
 }

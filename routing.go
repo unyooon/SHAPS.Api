@@ -52,6 +52,7 @@ func (r *Routing) setRouting() {
 		v1.POST("/users", func(c *gin.Context) { r.uc.Create(c) })
 
 		v1.POST("/subscriptions", func(c *gin.Context) { r.sc.Create(c) })
+		v1.POST("/subscriptions/:subscriptionId/join", func(c *gin.Context) { r.sc.Join(c) })
 	}
 }
 
